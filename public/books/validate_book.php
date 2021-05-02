@@ -4,21 +4,65 @@
  *  Book validation functions
  */
 
+/* Function that displays error messages */
+function dispErr($errors)
+{
+    if (isset($errors)) {
+        foreach ($errors as $error) {
+            echo $error;
+        }
+    }
+}
+
+/* Function checks if provided input is integer greater than 0 */
+function valInt($input): bool
+{
+    /* Initialise the return variable */
+    $valid = TRUE;
+
+    if (filter_var($input, FILTER_VALIDATE_INT) === FALSE) {
+        $errorMsg[] = 'Please enter a valid number line.<br>';
+        $valid = FALSE;
+    } else {
+        if ($input < 0) {
+            $errorMsg[] = 'Input value cannot be negative.<br>';
+            $valid = FALSE;
+        }
+    }
+
+    dispErr($errorMsg);
+    return $valid;
+}
+
+function validBook(): bool
+{
+    if (
+        valTitle($_POST['book_title']) &&
+        valGenre($_POST['book_genre']) &&
+        valYear($_POST['book_year']) &&
+        valPages($_POST['book_pages']) &&
+        valISBN($_POST['book_isbn']) &&
+        valStock($_POST['book_stock']) &&
+        valAbout($_POST['book_about'])
+    ) {
+        $valid = TRUE;
+    } else {
+        $valid = FALSE;
+    }
+    return $valid;
+}
 
 function valTitle(string $title): bool
 {
     /* Initialize the return variable */
     $valid = TRUE;
 
-    if (empty($title)) {
-        $errorMsg[] = 'Please enter book\'s title<br>';
-        $valid = FALSE;
-    } else {
+    if (isset($title)) {
         /* Title length check */
         $len = mb_strlen($title);
 
         if (($len > 255)) {
-            $errorMsg[] = 'Title cannot be longer than 255 characters<br>';
+            $errorMsg[] = 'Name cannot be longer than 255 characters<br>';
             $valid = FALSE;
         }
 
@@ -27,14 +71,12 @@ function valTitle(string $title): bool
             $errorMsg[] = 'Name must contain only alpha-numeric characters<br>';
             $valid = FALSE;
         }
+    } else {
+        $errorMsg[] = 'Please enter book\'s title<br>';
+        $valid = FALSE;
     }
 
-    /* Display errors */
-    if (isset($errorMsg)) {
-        foreach ($errorMsg as $error) {
-            echo $error;
-        }
-    }
+    dispErr($errorMsg);
     return $valid;
 }
 
@@ -43,10 +85,7 @@ function valGenre(string $genre): bool
     /* Initialize the return variable */
     $valid = TRUE;
 
-    if (empty($genre)) {
-        $errorMsg[] = 'Please enter book\'s genre<br>';
-        $valid = FALSE;
-    } else {
+    if (isset($genre)) {
         $len = mb_strlen($genre);
         if (($len > 64)) {
             $errorMsg[] = 'Name of the genre cannot be longer than 64 characters<br>';
@@ -58,50 +97,36 @@ function valGenre(string $genre): bool
             $errorMsg[] = 'Genre must contain only alpha characters<br>';
             $valid = FALSE;
         }
+    } else {
+        $errorMsg[] = 'Please enter book\'s genre<br>';
+        $valid = FALSE;
     }
 
-    /* Display errors */
-    if (isset($errorMsg)) {
-        foreach ($errorMsg as $error) {
-            echo $error;
-        }
-    }
-
+    dispErr($errorMsg);
     return $valid;
 }
 
 function valYear(string $year): bool
 {
-    /* Initialize the return variable */
+    /* Initialise the return variable */
     $valid = TRUE;
 
+    /* Check that the book issue year element exists. */
     if (isset($year)) {
-        /* Check if the value is integer */
-        if (filter_var($year, FILTER_VALIDATE_INT) == TRUE) {
-            if ($year < 0) {
-                $errorMsg[] = 'Year value cannot be negative.<br>';
+
+        if (valInt($year)) {
+            /* Check if the issue year is not greater than current year */
+            if ($year > intval(date('Y'))) {
+                $errorMsg[] = 'The books issue year cannot be greater than current year <br>';
                 $valid = FALSE;
             }
-            $current_year = intval(date('Y'));
-            if ($year > $current_year) {
-                $errorMsg[] = 'The books issue date cannot be greater than ' . $current_year . '<br>';
-                $valid = FALSE;
-            }
-        } else {
-            $errorMsg[] = 'Please enter an integer value for the issue year.<br>';
-            $valid = FALSE;
         }
     } else {
         $errorMsg[] = 'Please enter the book\'s issue year<br>';
         $valid = FALSE;
     }
 
-    /* Display errors */
-    if (isset($errorMsg)) {
-        foreach ($errorMsg as $error) {
-            echo $error;
-        }
-    }
+    dispErr($errorMsg);
 
     return $valid;
 }
@@ -111,32 +136,20 @@ function valPages(string $pages): bool
 {
     $valid = TRUE;
 
-    if (!empty($pages)) {
+    if (isset($pages)) {
         /* Check if the value is integer */
-        if (filter_var($pages, FILTER_VALIDATE_INT) == TRUE) {
-            if (($pages < 0)) {
-                $errorMsg[] = 'Pages value cannot be negative.<br>';
-                $valid = FALSE;
-            }
+        if (valInt($pages)) {
             if (($pages > 2000)) {
-                $errorMsg[] = 'Pages value cannot be greater than 2000.<br>';
+                $errorMsg[] = 'Please enter the correct number of pages.<br>';
                 $valid = FALSE;
             }
-        } else {
-            $errorMsg[] = 'Please enter an integer value for the number of pages.<br>';
-            $valid = FALSE;
         }
     } else {
         $errorMsg[] = 'Please enter the number of pages<br>';
         $valid = FALSE;
     }
 
-    /* Display errors */
-    if (isset($errorMsg)) {
-        foreach ($errorMsg as $error) {
-            echo $error;
-        }
-    }
+    dispErr($errorMsg);
 
     return $valid;
 }
@@ -145,9 +158,9 @@ function valISBN(string $isbn): bool
 {
     $valid = TRUE;
 
-    if (!empty($isbn)) {
+    if (isset($isbn)) {
         /* Check if the value is integer */
-        if (filter_var($isbn, FILTER_VALIDATE_INT) == TRUE) {
+        if (valInt($isbn)) {
             if (($isbn < 1000)) {
                 $errorMsg[] = 'ISBN value cannot be lower than 1000.<br>';
                 $valid = FALSE;
@@ -156,21 +169,13 @@ function valISBN(string $isbn): bool
                 $errorMsg[] = 'ISBN value cannot be greater than 10000.<br>';
                 $valid = FALSE;
             }
-        } else {
-            $errorMsg[] = 'Please enter an integer value for the number of isbn.<br>';
-            $valid = FALSE;
         }
     } else {
         $errorMsg[] = 'Please enter the number of ISBN<br>';
         $valid = FALSE;
     }
 
-    /* Display errors */
-    if (isset($errorMsg)) {
-        foreach ($errorMsg as $error) {
-            echo $error;
-        }
-    }
+    dispErr($errorMsg);
 
     return $valid;
 }
@@ -179,20 +184,10 @@ function valISBN(string $isbn): bool
 function valStock(string $stock): bool
 {
     $valid = TRUE;
-
-    if (!empty($stock)) {
-        if (is_numeric($stock)) {
-            if ($stock == intval($stock)) {
-                if (($stock < 0)) {
-                    $errorMsg[] = 'Stock value cannot be lower than 0.<br>';
-                    $valid = FALSE;
-                }
-                if (($stock > 1000)) {
-                    $errorMsg[] = 'Stock value cannot be greater than 1000.<br>';
-                    $valid = FALSE;
-                }
-            } else {
-                $errorMsg[] = 'Please provide the integer number<br>';
+    if (isset($stock)) {
+        if (valInt($stock)) {
+            if (($stock > 100)) {
+                $errorMsg[] = 'Stock value cannot be greater than 100.<br>';
                 $valid = FALSE;
             }
         } else {
@@ -201,16 +196,9 @@ function valStock(string $stock): bool
         }
     }
 
-    /* Display errors */
-    if (isset($errorMsg)) {
-        foreach ($errorMsg as $error) {
-            echo $error;
-        }
-    }
-
+    dispErr($errorMsg);
     return $valid;
 }
-
 function valAbout(string $about): bool
 {
     /* Initialize the return variable */
@@ -222,12 +210,7 @@ function valAbout(string $about): bool
         $valid = FALSE;
     }
 
-    /* Display errors */
-    if (isset($errorMsg)) {
-        foreach ($errorMsg as $error) {
-            echo $error;
-        }
-    }
+    dispErr($errorMsg);
 
     return $valid;
 }

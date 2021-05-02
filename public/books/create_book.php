@@ -9,15 +9,7 @@
     if ($logged_in) {
 
         if (isset($_POST['submit'])) {
-            $valid_book = valTitle($_POST['book_title']) &&
-                valGenre($_POST['book_genre']) &&
-                valYear($_POST['book_year']) &&
-                valPages($_POST['book_pages']) &&
-                valISBN($_POST['book_isbn']) &&
-                valStock($_POST['book_stock']) &&
-                valAbout($_POST['book_about']);
-
-            if ($valid_book) {
+            if (validBook()) {
                 try {
                     $new_book = [
                         'book_title' => $_POST['book_title'],
@@ -76,7 +68,7 @@
  <?php require "../templates/header.php";
 
     if (isset($_POST['submit'])) {
-        if ($valid_book) {
+        if (validBook()) {
             echo escape($_POST['book_title']) . ' successfully added';
         }
     }
