@@ -22,48 +22,9 @@ $logged_in = isset($_SESSION['librarian_login']);
 </head>
 
 <body>
+    <h1 class="header">Library "Mirage"</h1>
     <div class="box">
-        <div class="row header">
-            <h1>Library "Mirage"</h1>
-            <nav>
-                <ul>
-                    <li><a class="dropdown dropbtn" href="">Home</a></li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn">Authors</button>
-                            <div class="dropdown-content">
-                                <a href="./authors/read_author.php">Authors</a>
-                                <?php if ($logged_in) : ?>
-                                    <a href="./authors/create_author.php">Add a New Author</a>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn">Books</button>
-                            <div class="dropdown-content">
-                                <a href="./books/read_book.php">Books</a>
-                                <?php if ($logged_in) : ?>
-                                    <a href="./books/create_book.php">Add a New Book</a>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn">Login</button>
-                            <div class="dropdown-content">
-                                <?php if ($logged_in === FALSE) : ?>
-                                    <a href="./login/librarian_login.php">Librarian Login</a>
-                                <?php endif; ?>
-                                <a href="./login/librarian_logout.php">Logout</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <?php include './templates/navigation.php'; ?>
         <div class="row search_field">
             <?php
             if ($logged_in) {

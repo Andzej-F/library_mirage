@@ -34,6 +34,11 @@ function valInt($input): bool
     return $valid;
 }
 
+/* Characters input validation */
+function valChar($name): bool
+{
+}
+
 function validBook(): bool
 {
     if (
