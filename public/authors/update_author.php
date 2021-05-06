@@ -1,5 +1,6 @@
 <?php
 session_start();
+$logged_in = isset($_SESSION['librarian_login']);
 
 require '../../config.php';
 require '../../common.php';
