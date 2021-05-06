@@ -32,46 +32,13 @@ if (isset($_POST['submit'])) {
 
     echo 'The new author\'s ID is ' . $newId;
 
+    //TODO: create success message
     echo escape($_POST['author_name']) . ' ' .
         escape($_POST['author_surname']) . ' successfully added';
-
-    // $valid_author = valAuthorName($_POST['author_name']) &&
-    //     valAuthorSurname($_POST['author_surname']);
-    // if ($valid_author) {
-    //     try {
-    //         $author_data = [
-    //             'author_name' => $_POST['author_name'],
-    //             'author_surname' => $_POST['author_surname']
-    //         ];
-
-    //         $sql = "INSERT INTO `authors` (`author_name`, `author_surname`)
-    //              VALUES (:author_name, :author_surname)";
-
-    //         $statement = $pdo->prepare($sql);
-    //         $statement->execute($author_data);
-    //     } catch (PDOException $error) {
-    //         echo $sql . "<br>" . $error->getMessage();
-    //     }
-    // }
 }
-// } else {
-//     header('Location: http://localhost/PHP/Bandymai/library_mirage/public/index.php');
-//     exit();
-// }
 ?>
 
 <?php require '../templates/header.php'; ?>
-
-<?php
-/*
- if (isset($_POST['submit'])) {
-    if ($valid_author) {
-        echo escape($_POST['author_name']) . ' ' .
-            escape($_POST['author_surname']) . ' successfully added';
-    }
-}
-*/
-?>
 
 <h2>Add a New Author</h2>
 <?php include '../templates/navigation.php'; ?>
