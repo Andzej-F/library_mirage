@@ -1,29 +1,12 @@
 <?php session_start();
 $logged_in = isset($_SESSION['librarian_login']);
+include './templates/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library Mirage</title>
-
-    <link rel="stylesheet" href="/PHP/Bandymai/library_mirage/public/css/style.css" type="text/css">
-    <style>
-        body {
-            background-image: url('http://localhost/PHP/Bandymai/library_mirage/data/images/library_photo.png');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }
-    </style>
-</head>
-
-<body>
+<body class="main_page_background">
     <h1 class="header">Library "Mirage"</h1>
     <div class="box">
+
         <?php include './templates/navigation.php'; ?>
         <div class="row search_field">
             <?php

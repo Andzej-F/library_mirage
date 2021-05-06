@@ -1,4 +1,6 @@
 <?php
+session_start();
+$logged_in = isset($_SESSION['librarian_login']);
 
 require "../../config.php";
 require "../../common.php";
@@ -93,7 +95,7 @@ require "../templates/header.php";
 ?>
 
 <h2>Update the Book</h2>
-
+<?php include '../templates/navigation.php'; ?>
 <form class="form" action="" method="POST">
     <input type="hidden" name="book_id" value="<?php echo $result['book_id']; ?>">
     <div class="form-input">
@@ -137,7 +139,5 @@ require "../templates/header.php";
     </div>
     <input type="submit" name="submit" value="Update">
 </form>
-
-<a href="../index.php">Back to home</a>
 
 <?php include '../templates/footer.php';

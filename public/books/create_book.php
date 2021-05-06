@@ -75,7 +75,7 @@
     ?>
 
  <h2>Add a New Book</h2>
-
+ <?php include '../templates/navigation.php'; ?>
  <form class="form" action="http://localhost/PHP/Bandymai/library_mirage/public/books/create_book.php" method="POST">
      <div class="form-input">
          <label>Title</label>
@@ -121,7 +121,5 @@
          <input class="form-input-submit" type="submit" name="submit" value="ADD">
      </div>
  </form>
-
- <a href="../index.php">Back to home</a>
 
  <?php include '../templates/footer.php'; ?>
