@@ -113,6 +113,29 @@ function valGenre(string $genre): bool
 
 function valYear(string $year): bool
 {
+    /*
+      For example, a date field in the "YYYY" format must be exactly 4 characters long.
+
+      In that case, the minimum and maximum values are the same and the limit check
+      looks like this:
+      
+      PHP
+      if (!isset($_POST['date']))
+      {
+        echo 'Date is not set.';
+        die();
+      }
+      
+      $date = $_POST['date'];
+
+    // The string length must be exactly 4. 
+    if (mb_strlen($date) != 4) {
+        echo 'Date is not valid.';
+        die();
+    }
+
+     */
+
     /* Initialise the return variable */
     $valid = TRUE;
 
