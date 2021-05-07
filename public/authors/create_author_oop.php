@@ -3,38 +3,32 @@
 session_start();
 
 /* Check if the librarian has logged in */
-//$logged_in = isset($_SESSION['librarian_login']);
-
-/* Include the database connection file */
-require '../../config.php';
-
-/* Include the additional functions file */
-require '../../common.php';
-
-/* Include the Account class file */
-require './author_class.php';
-
-/* Create a new Account object */
-$author = new Author();
+$logged_in = isset($_SESSION['librarian_login']);
 
 /* Check if the librarian has logged in */
-//if ($logged_in) {
+if ($logged_in) {
 
-if (isset($_POST['submit'])) {
+    if (isset($_POST['submit'])) {
 
-    /* Add a new author */
-    try {
-        $newId = $author->createAuthor($_POST['author_name'], $_POST['author_surname']);
-    } catch (Exception $e) {
-        echo $e->getMessage();
-        die();
+        /* Include the database connection file */
+        require '../../config.php';
+
+        /* Include the additional functions file */
+        require '../../common.php';
+
+        /* Include the Account class file */
+        require './author_class.php';
+
+        /* Create a new Account object */
+        $author = new Author();
+
+        /* Add a new author */
+        try {
+            $author->createAuthor($_POST['author_name'], $_POST['author_surname']);
+        } catch (Exception $e) {
+            echo '<p class="error">' . $e->getMessage() . '</p>';
+        }
     }
-
-    echo 'The new author\'s ID is ' . $newId;
-
-    //TODO: create success message
-    echo escape($_POST['author_name']) . ' ' .
-        escape($_POST['author_surname']) . ' successfully added';
 }
 ?>
 

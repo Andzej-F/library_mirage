@@ -1,11 +1,9 @@
 <?php
 
 /*
- * 	Author's Class
+ * 	Author Class
  * 	
-
 */
-
 
 class Author
 {
@@ -17,7 +15,7 @@ class Author
     /* The name of the author (or NULL if there is no author name) */
     private $name;
 
-    /* The surname of the author (or NULL if there is no auhor surname) */
+    /* The surname of the author (or NULL if there is no author surname) */
     private $surname;
 
 
@@ -26,7 +24,7 @@ class Author
     /* Constructor */
     public function __construct()
     {
-        /* Initialize the $name and $surname variables to NULL */
+        /* Initialize the $id, $name and $surname variables to NULL */
         $this->id = NULL;
         $this->name = NULL;
         $this->surname = NULL;
@@ -55,9 +53,8 @@ class Author
         return $this->surname;
     }
 
-    /* Add a new authpr to the system and return its ID 
-      (the author_id column of the authors table) */
-    public function createAuthor(string $name, string $surname): int
+    /* Add a new author to the system */
+    public function createAuthor(string $name, string $surname)
     {
         /* Global $pdo object */
         global $pdo;
@@ -66,20 +63,19 @@ class Author
         $name = trim($name);
         $surname = trim($surname);
 
-        /* Validation step */
+        /* Author validation */
 
         /* Check if the author name is valid. If not, throw an exception */
         if (!$this->isNameValid($name)) {
-            throw new Exception('Invalid author name 73');
+            throw new Exception('Invalid author name 73'); //TODO delete line number
         }
 
         /* Check if the surname is valid. If not, throw an exception */
         if (!$this->isSurnameValid($surname)) {
-            throw new Exception('Invalid author surname 78');
+            throw new Exception('Invalid author surname 78'); //TODO delete line number
         }
 
-        /* Check if the author having the same name already exists.
-          If it does, throw an exception */
+        /* Check if the author having the same name already exists. If yes, throw an exception*/
         if (!is_null($this->getIdFromAuthor($name, $surname))) {
             throw new Exception('Author already exists');
         }
@@ -91,7 +87,7 @@ class Author
                   VALUES (:name, :surname)';
 
         /* Values array for PDO */
-        $values = array(':name' => $name, ':surname' => $surname);
+        $values = [':name' => $name, ':surname' => $surname];
 
         /* Execute the query */
         try {
@@ -99,23 +95,21 @@ class Author
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 102');
+            throw new Exception('Database query error 102'); //TODO delete line number
         }
-
-        /* Return the new ID */
-        return $pdo->lastInsertId();
+        echo '<p style="color:green;">' . $name . ' ' . $surname . ' successfully added!</p>';
     }
 
-    /* Delete the author (selected by its ID) */
+    /* Delete the author (selected by her/his ID) */
     public function deleteAuthor(int $id)
     {
         /* Global $pdo object */
         global $pdo;
 
         /* Check if the ID is valid */
-        if (!$this->isIdValid($id)) {
-            throw new Exception('Invalid author ID');
-        }
+        // if (!$this->isIdValid($id)) {
+        //     throw new Exception('Invalid author ID');
+        // }
 
         /* Query template */
         $query = 'DELETE FROM library_mirage.authors
@@ -130,7 +124,7 @@ class Author
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 287 133');
+            throw new Exception('Database query error 128'); //TODO delete line number
         }
     }
 
@@ -145,9 +139,9 @@ class Author
         $surname = trim($surname);
 
         /* Check if the ID is valid */
-        if (!$this->isIdValid($id)) {
-            throw new Exception('Invalid author ID');
-        }
+        // if (!$this->isIdValid($id)) {
+        //     throw new Exception('Invalid author ID');
+        // }
 
         /* Check if the author name is valid. */
         if (!$this->isNameValid($name)) {
@@ -187,7 +181,7 @@ class Author
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 287 190');
+            throw new Exception('Database query error 185'); //TODO delete line number
         }
     }
 
@@ -201,7 +195,7 @@ class Author
             return FALSE;
         }
 
-        /* Check if the name is valid using isSurnameValid function
+        /* Check if the name is valid. "isSurnameValid()" function is used
            to avoid code repetition */
         if (!$this->isSurnameValid($name)) {
             return FALSE;
@@ -230,7 +224,7 @@ class Author
 
         /* Check that the input contains alpha characters. */
         if (!ctype_alpha($surname)) {
-            echo 'Input has to contain only alpha characters 233<br>';
+            echo 'Input has to contain only alpha characters 228<br>'; //TODO delete line number
             return FALSE;
         }
 
@@ -239,21 +233,21 @@ class Author
     }
 
     /* A sanitization check for the author ID */
-    public function isIdValid(int $id): bool
-    {
-        /* Initialize the return variable */
-        $valid = TRUE;
+    // public function isIdValid(int $id): bool
+    // {
+    //     /* Initialize the return variable */
+    //     $valid = TRUE;
 
-        /* Example check: the ID must be between 1 and 1000000 */
+    //     /* Example check: the ID must be between 1 and 1000000 */
 
-        if (($id < 1) || ($id > 1000000)) {
-            $valid = FALSE;
-        }
+    //     if (($id < 1) || ($id > 1000000)) {
+    //         $valid = FALSE;
+    //     }
 
-        /* You can add more checks here */
+    //     /* You can add more checks here */
 
-        return $valid;
-    }
+    //     return $valid;
+    // }
 
     /* Function returns the author's id having $name as name and $surname as surname,
        or NULL if it's not found */
@@ -277,7 +271,7 @@ class Author
 
         /* Search the ID on the database */
         $query = 'SELECT author_id FROM library_mirage.authors
-                  WHERE (author_name = :name AND author_surname = :surname)';
+                  WHERE author_name = :name AND author_surname = :surname';
         $values = [':name' => $name, ':surname' => $surname];
 
         try {
@@ -285,7 +279,7 @@ class Author
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 287');
+            throw new Exception('Database query error 283'); //TODO delete line number
         }
 
         $row = $res->fetch(PDO::FETCH_ASSOC);

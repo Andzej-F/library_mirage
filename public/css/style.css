@@ -292,3 +292,7 @@ tbody tr:last-of-type {
   justify-content: space-evenly;
   background-color: darkgreen;
 }
+
+.error {
+  color: #FF0000;
+}

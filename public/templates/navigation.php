@@ -8,7 +8,7 @@
                     <div class="dropdown-content">
                         <a href="http://localhost/PHP/Bandymai/library_mirage/public/authors/read_author.php">Authors</a>
                         <?php if ($logged_in) : ?>
-                            <a href="http://localhost/PHP/Bandymai/library_mirage/public/authors/create_author.php">Add a New Author</a>
+                            <a href="http://localhost/PHP/Bandymai/library_mirage/public/authors/create_author_oop.php">Add a New Author</a>
                         <?php endif; ?>
                     </div>
                 </div>

@@ -8,12 +8,14 @@ include './templates/header.php';
     <div class="box">
 
         <?php include './templates/navigation.php'; ?>
+
         <div class="row search_field">
             <?php
             if ($logged_in) {
                 include './search/search_field.php';
             } ?>
         </div>
+
         <div class="row content">
             <div class="new_books">
                 <h3><span>Newest Books</span></h3>
