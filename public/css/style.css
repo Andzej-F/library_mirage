@@ -16,6 +16,13 @@ body {
   height: 100%;
 }
 
+.main_page_background {
+  background-image: url('http://localhost/PHP/Bandymai/library_mirage/data/images/library_photo.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
 h2 {
   text-align: center;
   color: crimson;
@@ -29,11 +36,11 @@ a {
 }
 
 /*---------------------------------- header------------------------------ */
-.box .row.header {
+.box .row .header {
   flex: 0 1 auto;
 }
 
-.header h1 {
+h1 {
   text-align: center;
   color: crimson;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -284,4 +291,8 @@ tbody tr:last-of-type {
   width: 150px;
   justify-content: space-evenly;
   background-color: darkgreen;
+}
+
+.error {
+  color: #FF0000;
 }

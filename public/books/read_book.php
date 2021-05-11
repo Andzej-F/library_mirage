@@ -25,6 +25,7 @@
 
     if ($results && $statement->rowCount() > 0) { ?>
         <h2>Books</h2>
+        <?php include '../templates/navigation.php'; ?>
         <table>
             <thead>
                 <tr>
@@ -59,7 +60,5 @@
         echo "No results found";
     }
     ?>
-
-    <a href="../index.php">Back to home</a>
 
     <?php include '../templates/footer.php'; ?>

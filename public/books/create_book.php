@@ -9,15 +9,7 @@
     if ($logged_in) {
 
         if (isset($_POST['submit'])) {
-            $valid_book = valTitle($_POST['book_title']) &&
-                valGenre($_POST['book_genre']) &&
-                valYear($_POST['book_year']) &&
-                valPages($_POST['book_pages']) &&
-                valISBN($_POST['book_isbn']) &&
-                valStock($_POST['book_stock']) &&
-                valAbout($_POST['book_about']);
-
-            if ($valid_book) {
+            if (validBook()) {
                 try {
                     $new_book = [
                         'book_title' => $_POST['book_title'],
@@ -76,14 +68,14 @@
  <?php require "../templates/header.php";
 
     if (isset($_POST['submit'])) {
-        if ($valid_book) {
+        if (validBook()) {
             echo escape($_POST['book_title']) . ' successfully added';
         }
     }
     ?>
 
  <h2>Add a New Book</h2>
-
+ <?php include '../templates/navigation.php'; ?>
  <form class="form" action="http://localhost/PHP/Bandymai/library_mirage/public/books/create_book.php" method="POST">
      <div class="form-input">
          <label>Title</label>
@@ -129,7 +121,5 @@
          <input class="form-input-submit" type="submit" name="submit" value="ADD">
      </div>
  </form>
-
- <a href="../index.php">Back to home</a>
 
  <?php include '../templates/footer.php'; ?>

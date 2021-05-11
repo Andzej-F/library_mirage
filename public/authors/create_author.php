@@ -48,6 +48,7 @@ if ($logged_in) {
 ?>
 
 <h2>Add a New Author</h2>
+<?php include '../templates/navigation.php'; ?>
 
 <form class="form" method="POST">
     <div class="form-input">
@@ -61,7 +62,5 @@ if ($logged_in) {
     <div class="form-input">
         <input type="submit" name="submit" value="ADD">
 </form>
-
-<a href="../index.php">Back to home</a>
 
 <?php require '../templates/footer.php'; ?>

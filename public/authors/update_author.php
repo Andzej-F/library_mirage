@@ -1,4 +1,6 @@
 <?php
+session_start();
+$logged_in = isset($_SESSION['librarian_login']);
 
 require '../../config.php';
 require '../../common.php';
@@ -63,6 +65,7 @@ if (isset($_GET['author_id'])) {
 } ?>
 
 <h2>Edit the Author</h2>
+<?php include '../templates/navigation.php'; ?>
 
 <form class="form" method="POST">
     <div class="form-input">
@@ -80,7 +83,5 @@ if (isset($_GET['author_id'])) {
     </div>
     <input type="submit" name="submit" value="Submit">
 </form>
-
-<a href="../index.php">Back to home</a>
 
 <?php require '../templates/footer.php'; ?>
