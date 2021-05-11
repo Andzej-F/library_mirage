@@ -67,12 +67,12 @@ class Author
 
         /* Check if the author name is valid. If not, throw an exception */
         if (!$this->isNameValid($name)) {
-            throw new Exception('Invalid author name 73'); //TODO delete line number
+            throw new Exception('Invalid author name'); //
         }
 
         /* Check if the surname is valid. If not, throw an exception */
         if (!$this->isSurnameValid($surname)) {
-            throw new Exception('Invalid author surname 78'); //TODO delete line number
+            throw new Exception('Invalid author surname');
         }
 
         /* Check if the author having the same name already exists. If yes, throw an exception*/
@@ -95,9 +95,14 @@ class Author
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 102'); //TODO delete line number
+            throw new Exception('Database query error');
         }
+
+        /* Display success message */
         echo '<p style="color:green;">' . $name . ' ' . $surname . ' successfully added!</p>';
+
+        /* Clear form input after success message */
+        $_POST = [];
     }
 
     /* Delete the author (selected by her/his ID) */
@@ -105,11 +110,6 @@ class Author
     {
         /* Global $pdo object */
         global $pdo;
-
-        /* Check if the ID is valid */
-        // if (!$this->isIdValid($id)) {
-        //     throw new Exception('Invalid author ID');
-        // }
 
         /* Query template */
         $query = 'DELETE FROM library_mirage.authors
@@ -124,7 +124,7 @@ class Author
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 128'); //TODO delete line number
+            throw new Exception('Database query error');
         }
     }
 
@@ -138,11 +138,6 @@ class Author
         $name = trim($name);
         $surname = trim($surname);
 
-        /* Check if the ID is valid */
-        // if (!$this->isIdValid($id)) {
-        //     throw new Exception('Invalid author ID');
-        // }
-
         /* Check if the author name is valid. */
         if (!$this->isNameValid($name)) {
             throw new Exception('Invalid author name');
@@ -154,7 +149,7 @@ class Author
         }
 
         /* Check if the author having the same name already exists (except for this one). */
-        $idFromAuthor = $this->getIdFromAuthor($author);
+        $idFromAuthor = $this->getIdFromAuthor($name, $surname);
 
         if (!is_null($idFromAuthor) && ($idFromAuthor != $id)) {
             throw new Exception('Author name and surname already used');
@@ -181,8 +176,14 @@ class Author
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 185'); //TODO delete line number
+            throw new Exception('Database query error');
         }
+
+        /* Display success message */
+        echo '<p style="color:green;">' . $name . ' ' . $surname . ' successfully updated!</p>';
+
+        /* Clear form input after success message */
+        $_POST = [];
     }
 
     /* A sanitization check for the author name */
@@ -190,14 +191,27 @@ class Author
     {
 
         /* Check if the name field is not empty */
-        if (!isset($name)) {
-            echo 'This field cannot be empty';
-            return FALSE;
-        }
+        if (isset($name)) {
 
-        /* Check if the name is valid. "isSurnameValid()" function is used
-           to avoid code repetition */
-        if (!$this->isSurnameValid($name)) {
+            /* String length check */
+            if ((mb_strlen($name) > 64)) {
+                echo 'Input is too long';
+                return FALSE;
+            }
+
+            /* Check that the input contains alpha characters and special characters (dot, hyphen, apostrophe) */
+            if (!preg_match('/^[a-zA-Z ._-]+$/', $name)) {
+                echo 'Input has to contain only alpha characters<br>';
+                return FALSE;
+            }
+
+            /* Check if the input starts with capital letter */
+            if ($name != ucwords($name, " \t\r\n\f\v'")) {
+                echo 'Input must start with a capital letter<br>';
+                return FALSE;
+            }
+        } else {
+            echo 'This field cannot be empty';
             return FALSE;
         }
 
@@ -208,46 +222,14 @@ class Author
     /* A sanitization check for the author surname */
     public function isSurnameValid(string $surname): bool
     {
-        /* String length check */
-        $len = mb_strlen($surname);
-
-        if (($len > 64)) {
-            echo 'Input is too long';
+        /* To check the surname input, "isNameValid()" function is used
+           to avoid code repetition */
+        if ($this->isNameValid($surname) === TRUE) {
+            return TRUE;
+        } else {
             return FALSE;
         }
-
-        /* Check if the input starts with capital letter */
-        if ($surname != ucwords($surname, " \t\r\n\f\v'")) {
-            echo 'Input must start with a capital letter<br>';
-            return FALSE;
-        }
-
-        /* Check that the input contains alpha characters. */
-        if (!ctype_alpha($surname)) {
-            echo 'Input has to contain only alpha characters 228<br>'; //TODO delete line number
-            return FALSE;
-        }
-
-        /* If everything is ok, return true. */
-        return TRUE;
     }
-
-    /* A sanitization check for the author ID */
-    // public function isIdValid(int $id): bool
-    // {
-    //     /* Initialize the return variable */
-    //     $valid = TRUE;
-
-    //     /* Example check: the ID must be between 1 and 1000000 */
-
-    //     if (($id < 1) || ($id > 1000000)) {
-    //         $valid = FALSE;
-    //     }
-
-    //     /* You can add more checks here */
-
-    //     return $valid;
-    // }
 
     /* Function returns the author's id having $name as name and $surname as surname,
        or NULL if it's not found */
@@ -279,7 +261,7 @@ class Author
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 283'); //TODO delete line number
+            throw new Exception('Database query error');
         }
 
         $row = $res->fetch(PDO::FETCH_ASSOC);
