@@ -3,7 +3,7 @@ Basic CRUD web application.
 
 This project is for educational porpuses only with main focus on back-end.
 
-Project features
-plain PHP(no frameworks or libraries)
-PDO for database connection
+Project features: <br>
+plain PHP(no frameworks or libraries) <br>
+PDO for database connection <br>
 multi-page
