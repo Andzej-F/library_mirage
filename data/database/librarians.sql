@@ -1,3 +1,7 @@
+--
+-- Table structure for table `librarians`
+--
+
 CREATE TABLE `librarians` (
   `libr_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `libr_email` varchar(64) NOT NULL,

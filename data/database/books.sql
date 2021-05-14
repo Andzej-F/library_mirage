@@ -1,3 +1,7 @@
+--
+-- Table structure for table `books`
+--
+
 CREATE TABLE `books` (
   `book_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `book_title` varchar(255) NOT NULL,

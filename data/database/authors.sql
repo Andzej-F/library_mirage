@@ -1,3 +1,7 @@
+--
+-- Table structure for table `authors`
+--
+
 CREATE TABLE `authors` (
   `author_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `author_name` varchar(64) DEFAULT '',
