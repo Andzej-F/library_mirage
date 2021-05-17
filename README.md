@@ -1,7 +1,7 @@
 # library_mirage
 Basic CRUD web application. 
 
-This project is made for educational porpuses.
+This project has been created for educational porpuses.
 
 Project features: <br>
 - plain PHP(no frameworks) <br>
