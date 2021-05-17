@@ -13,16 +13,16 @@ if ($logged_in) {
         /* Include the database connection file */
         require '../../config.php';
 
-        /* Include the additional functions file */
+        /* Include the file with additional functions */
         require '../../common.php';
 
-        /* Include the Account class file */
+        /* Include the Author class file */
         require './author_class.php';
 
-        /* Create a new Account object */
+        /* Create a new Author object */
         $author = new Author();
 
-        /* Add a new author */
+        /* Create a new author */
         try {
             $author->createAuthor($_POST['author_name'], $_POST['author_surname']);
         } catch (Exception $e) {
@@ -37,17 +37,18 @@ if ($logged_in) {
 <h2>Add a New Author</h2>
 <?php include '../templates/navigation.php'; ?>
 
-<form class="form" method="POST">
-    <div class="form-input">
+<form method="POST">
+    <?php include('author_errors.php'); ?>
+    <div class="input-group">
         <label>Name</label>
         <input type="text" name="author_name" value="<?= isset($_POST['author_name']) ? escape($_POST['author_name']) : ''; ?>">
     </div>
-    <div class="form-input">
+    <div class="input-group">
         <label>Surname</label>
         <input type="text" name="author_surname" value="<?= isset($_POST['author_surname']) ? escape($_POST['author_surname']) : ''; ?>">
     </div>
-    <div class="form-input">
-        <input type="submit" name="submit" value="ADD">
+    <div class="input-group">
+        <button type="submit" class="btn" name="submit">ADD</button>
 </form>
 
 <?php require '../templates/footer.php'; ?>

@@ -76,36 +76,38 @@
 
  <h2>Add a New Book</h2>
  <?php include '../templates/navigation.php'; ?>
- <form class="form" action="http://localhost/PHP/Bandymai/library_mirage/public/books/create_book.php" method="POST">
-     <div class="form-input">
+
+ <form method="POST">
+     <?php include('book_errors.php'); ?>
+     <div class="input-group">
          <label>Title</label>
          <input type="text" name="book_title" value="<?= isset($_POST['book_title']) ? escape($_POST['book_title']) : ''; ?>">
      </div>
-     <div class="form-input">
+     <div class="input-group">
          <label>Genre</label>
          <input type="text" name="book_genre" value="<?= isset($_POST['book_genre']) ? escape($_POST['book_genre']) : ''; ?>">
      </div>
-     <div class="form-input">
+     <div class="input-group">
          <label>Year</label>
          <input type="text" name="book_year" value="<?= isset($_POST['book_year']) ? escape($_POST['book_year']) : ''; ?>">
      </div>
-     <div class="form-input">
+     <div class="input-group">
          <label>Pages</label>
          <input type="text" name="book_pages" value="<?= isset($_POST['book_pages']) ? escape($_POST['book_pages']) : ''; ?>">
      </div>
-     <div class="form-input">
+     <div class="input-group">
          <label>ISBN</label>
          <input type="text" name="book_isbn" value="<?= isset($_POST['book_isbn']) ? escape($_POST['book_isbn']) : ''; ?>">
      </div>
-     <div class="form-input">
+     <div class="input-group">
          <label>Stock</label>
          <input type="text" name="book_stock" value="<?= isset($_POST['book_stock']) ? escape($_POST['book_stock']) : ''; ?>">
      </div>
-     <div class="form-input">
+     <div class="input-group">
          <label>About</label>
          <textarea name="book_about" value="<?= isset($_POST['book_about']) ? escape($_POST['book_about']) : ''; ?>"></textarea>
      </div>
-     <div class="form-input">
+     <div class="input-group">
          <label>Choose the author</label>
          <select name="book_author_id">
              <?php
@@ -117,8 +119,9 @@
                 } ?>
          </select>
      </div>
-     <div class="form-input">
-         <input class="form-input-submit" type="submit" name="submit" value="ADD">
+     <div class="input-group">
+         <!-- <input class="input-group-submit" type="submit" name="submit" value="ADD"> -->
+         <button type="submit" class="btn" name="submit">ADD</button>
      </div>
  </form>
 

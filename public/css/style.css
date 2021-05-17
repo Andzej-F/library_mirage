@@ -254,45 +254,79 @@ tbody tr:last-of-type {
   border-radius: 10px;
 }
 
-/*-----------------------------------form-------------*/
-.form {
-  width: 300px;
+/* Form Style */
+
+form,
+.content {
+  width: 30%;
+  margin: 0px auto;
   padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  border: 1px solid #B0C4DE;
+  background: whitesmoke;
+  border-radius: 10px;
 }
 
-.form-input {
+.input-group {
+  margin: 10px 0px 10px 0px;
+}
+
+.input-group label {
+  display: block;
+  text-align: left;
+  margin: 3px;
+}
+
+.input-group input {
+  height: 20px;
+  width: 93%;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+.input-group textarea {
+  height: 60px;
+  width: 93%;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+select {
+  height: 30px;
   width: 100%;
-  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid gray;
 }
 
-.form-input label {
-  width: 10%;
-  margin-bottom: 5px;
-}
-
-.form-input input {
+.btn {
+  padding: 10px;
   width: 100%;
-}
-
-.form-input select {
-  width: 100%;
-  height: 25px;
-}
-
-.form-input textarea {
-  width: 100%;
-  height: 100px;
-}
-
-.form-input-submit {
-  width: 150px;
-  justify-content: space-evenly;
-  background-color: darkgreen;
+  /* margin-left: 20%; */
+  font-size: 15px;
+  color: white;
+  background: #5F9EA0;
+  border: none;
+  border-radius: 5px;
 }
 
 .error {
-  color: #FF0000;
+  width: 30%;
+  margin: 0px auto;
+  padding: 10px;
+  border: 1px solid #a94442;
+  color: #a94442;
+  background: #f2dede;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.success {
+  color: #3c763d;
+  background: #dff0d8;
+  border: 1px solid #3c763d;
+  margin-bottom: 20px;
 }
