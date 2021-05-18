@@ -26,11 +26,4 @@ include './templates/header.php'; ?>
             </div>
         </div>
 
-        <div class="row footer">
-            <ul>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Resources</a></li>
-            </ul>
-        </div>
-    </div>
-    <?php require './templates/footer.php'; ?>
+        <?php require './templates/footer.php'; ?>
