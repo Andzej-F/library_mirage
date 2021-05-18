@@ -1,9 +1,9 @@
 # library_mirage
 Basic CRUD web application. 
 
-This project is for educational porpuses only with main focus on back-end.
+This project has been created for educational porpuses.
 
 Project features: <br>
-plain PHP(no frameworks or libraries) <br>
-PDO for database connection <br>
-multi-page
+- plain PHP(no frameworks) <br>
+- main focus on back-end <br>
+- use PDO for database connection <br>
