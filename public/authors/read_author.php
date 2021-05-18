@@ -1,6 +1,5 @@
     <?php
     session_start();
-    $logged_in = isset($_SESSION['librarian_login']);
 
     require '../../common.php';
     require '../../config.php';
@@ -25,7 +24,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Surname</th>
-                    <?php if ($logged_in) : ?>
+                    <?php if (isset($_SESSION['libr_login'])) : ?>
                         <th>Update</th>
                         <th>Delete</th>
                     <?php endif; ?>
@@ -37,7 +36,7 @@
                         <td><?= escape($row['author_name']); ?></td>
                         <td><?= escape($row['author_surname']); ?></td>
                         <?php
-                        if ($logged_in) : ?>
+                        if (isset($_SESSION['libr_login'])) : ?>
                             <td><a href="./update_author.php?author_id=<?php echo $row['author_id']; ?>">UPDATE</a></td>
                             <td><a href="./delete_author.php?author_id=<?php echo $row['author_id']; ?>">DELETE</a></td>
                         <?php endif; ?>

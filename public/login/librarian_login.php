@@ -4,7 +4,7 @@ session_start();
 require '../../config.php';
 require './librarian_validation.php';
 
-if (isset($_SESSION['librarian_login'])) {
+if (isset($_SESSION['libr_login'])) {
     header('Location: http://localhost/PHP/Bandymai/book_shop/public/index.php');
     exit();
 }
@@ -32,7 +32,7 @@ if (isset($_POST['btn_login'])) {
                 if (($input_email == $dbemail) &&
                     (password_verify($input_password, $dbpassword))
                 ) {
-                    $_SESSION['librarian_login'] = $input_email;
+                    $_SESSION['libr_login'] = $input_email;
                     $loginMsg = 'Librarian... Successfully Login...';
                     header('refresh:1; url=http://localhost/PHP/Bandymai/library_mirage/public/index.php');
                 } else {
@@ -63,14 +63,22 @@ if (isset($loginMsg)) {
 
 <?php include '../templates/header.php'; ?>
 
-<form class="form-login" method="post">
-    <label class="form-login-label">Email</label>
-    <input class="form-login-input-text" type="text" name="input_email" placeholder="Enter email"><br>
-    <label class="form-login-label">Password</label>
-    <input class="form-login-input-password" type="password" name="input_password" placeholder="Enter password">
-    <input class="form-login-input-submit" type="submit" name="btn_login" value="Login"><br><br>
-</form>
+<h2>Books</h2>
 
-<a class=".form-login" href="../index.php">Back to home</a>
+<?php include '../templates/navigation.php'; ?>
+
+<form class="form-login" method="post">
+    <div class="input-group">
+        <label>Email</label>
+        <input type="text" name="input_email" placeholder="Enter email"><br>
+    </div>
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" name="input_password" placeholder="Enter password">
+    </div>
+    <div class="input-group">
+        <button type="submit" class="btn" name="btn_login">Log In</button>
+    </div>
+</form>
 
 <?php include '../templates/footer.php'; ?>

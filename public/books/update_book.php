@@ -1,6 +1,5 @@
 <?php
 session_start();
-$logged_in = isset($_SESSION['librarian_login']);
 
 require "../../config.php";
 require "../../common.php";
@@ -89,9 +88,6 @@ if (isset($_GET['book_id'])) {
 }
 require "../templates/header.php";
 
-// if ($valid_book) {
-//     echo escape($_POST['book_title']) . ' successfully updated';
-// }
 ?>
 
 <h2>Update the Book</h2>

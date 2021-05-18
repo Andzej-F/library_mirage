@@ -3,10 +3,7 @@
 session_start();
 
 /* Check if the librarian has logged in */
-$logged_in = isset($_SESSION['librarian_login']);
-
-/* Check if the librarian has logged in */
-if ($logged_in) {
+if (isset($_SESSION['libr_login'])) {
 
     if (isset($_POST['submit'])) {
 

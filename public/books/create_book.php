@@ -1,12 +1,11 @@
  <?php
     session_start();
-    $logged_in = isset($_SESSION['librarian_login']);
 
     require "../../config.php";
     require "../../common.php";
     require "validate_book.php";
 
-    if ($logged_in) {
+    if (isset($_SESSION['libr_login'])) {
 
         if (isset($_POST['submit'])) {
             if (validBook()) {
@@ -39,6 +38,7 @@
                     :book_isbn,
                     :book_stock,
                     :book_about)";
+
                     $statement = $pdo->prepare($sql);
                     $statement->execute($new_book);
                 } catch (PDOException $error) {
@@ -120,7 +120,6 @@
          </select>
      </div>
      <div class="input-group">
-         <!-- <input class="input-group-submit" type="submit" name="submit" value="ADD"> -->
          <button type="submit" class="btn" name="submit">ADD</button>
      </div>
  </form>

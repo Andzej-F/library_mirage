@@ -1,7 +1,8 @@
-<?php session_start();
-$logged_in = isset($_SESSION['librarian_login']);
-include './templates/header.php';
-?>
+<?php
+
+session_start();
+
+include './templates/header.php'; ?>
 
 <body class="main_page_background">
     <h1 class="header">Library "Mirage"</h1>
@@ -9,14 +10,14 @@ include './templates/header.php';
 
         <?php include './templates/navigation.php'; ?>
 
-        <div class="row search_field">
+        <div class="row">
             <?php
-            if ($logged_in) {
+            if (isset($_SESSION['libr_login'])) {
                 include './search/search_field.php';
             } ?>
         </div>
 
-        <div class="row content">
+        <div class="row main-content">
             <div class="new_books">
                 <h3><span>Newest Books</span></h3>
                 <div class="new_book"><img src="../data/images/the_three_musketers.jpg" alt="The Three Musketers"></div>

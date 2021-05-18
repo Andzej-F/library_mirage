@@ -1,12 +1,11 @@
     <?php
 
     session_start();
-    $logged_in = isset($_SESSION['librarian_login']);
 
     require '../../config.php';
     require '../../common.php';
 
-    if ($logged_in) {
+    if (isset($_SESSION['libr_login'])) {
         if (isset($_GET['submit_search'])) {
             try {
                 $search = escape($_GET['search']);
@@ -33,12 +32,13 @@
     require '../templates/header.php';
     if ($results && ($statement->rowCount() > 0)) { ?>
         <h2>Books</h2>
+        <?php include '../templates/navigation.php'; ?>
         <table>
             <thead>
                 <tr>
                     <th>Title</th>
                     <th>Author</th>
-                    <?php if ($logged_in) : ?>
+                    <?php if (isset($_SESSION['libr_login'])) : ?>
                         <th>Update</th>
                         <th>Delete</th>
                     <?php endif; ?>
@@ -54,7 +54,7 @@
                             <?php echo escape($result['author_name']); ?>
                             <?php echo escape($result['author_surname']); ?>
                         </td>
-                        <?php if ($logged_in) : ?>
+                        <?php if (isset($_SESSION['libr_login'])) : ?>
                             <td><a href="../books/update.php?book_id=<?php echo escape($result['book_id']); ?>">UPDATE</a></td>
                             <td><a href="../books/delete.php?book_id=<?php echo escape($result['book_id']); ?>">DELETE</a></td>
                         <?php endif; ?>
@@ -67,7 +67,4 @@
         echo "No results found";
     }
     ?>
-
-    <a href="../index.php">Back to home</a>
-
     <?php include '../templates/footer.php'; ?>

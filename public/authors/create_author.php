@@ -1,14 +1,13 @@
 <?php
 
 session_start();
-$logged_in = isset($_SESSION['librarian_login']);
 
 require '../../config.php';
 require '../../common.php';
 require './validate_author.php';
 
 /* Check if the librarian has logged in */
-if ($logged_in) {
+if (isset($_SESSION['libr_login'])) {
 
     if (isset($_POST['submit'])) {
 
