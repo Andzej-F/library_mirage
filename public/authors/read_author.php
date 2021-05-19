@@ -37,7 +37,7 @@
                         <td><?= escape($row['author_surname']); ?></td>
                         <?php
                         if (isset($_SESSION['libr_login'])) : ?>
-                            <td><a href="./update_author.php?author_id=<?php echo $row['author_id']; ?>">UPDATE</a></td>
+                            <td><a href="./update_author_oop.php?author_id=<?php echo $row['author_id']; ?>">UPDATE</a></td>
                             <td><a href="./delete_author.php?author_id=<?php echo $row['author_id']; ?>">DELETE</a></td>
                         <?php endif; ?>
                     </tr>

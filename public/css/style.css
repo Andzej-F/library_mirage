@@ -184,7 +184,7 @@ https: //codewithawa.com/posts/complete-user-registration-system-using-php-and-m
 */
 form,
 .content {
-  width: 35%;
+  width: 30%;
   margin: 0px auto;
   padding: 10px;
   border: 1px solid #B0C4DE;
@@ -239,21 +239,21 @@ select {
 }
 
 .error {
-  width: 45%;
-  /* margin: 0px auto; */
   padding: 5px;
   border: 1px solid #a94442;
   color: #a94442;
   background: #f2dede;
   border-radius: 5px;
-  text-align: left;
+  text-align: center;
 }
 
 .success {
   color: #3c763d;
   background: #dff0d8;
   border: 1px solid #3c763d;
-  margin-bottom: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
 }
 
 /* -------------------- Search Field --------------------*/
