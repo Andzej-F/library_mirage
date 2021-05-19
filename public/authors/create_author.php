@@ -2,64 +2,66 @@
 
 session_start();
 
-require '../../config.php';
+/* Include the file with additional functions */
 require '../../common.php';
-require './validate_author.php';
+
+/* Initial value for error string  */
+$error = '';
 
 /* Check if the librarian has logged in */
 if (isset($_SESSION['libr_login'])) {
 
     if (isset($_POST['submit'])) {
+        /* Include the database connection file */
+        require '../../config.php';
 
-        $valid_author = valAuthorName($_POST['author_name']) &&
-            valAuthorSurname($_POST['author_surname']);
-        if ($valid_author) {
-            try {
-                $author_data = [
-                    'author_name' => $_POST['author_name'],
-                    'author_surname' => $_POST['author_surname']
-                ];
+        /* Include the Author class file */
+        require '../classes/author_class.php';
 
-                $sql = "INSERT INTO `authors` (`author_name`, `author_surname`)
-                     VALUES (:author_name, :author_surname)";
-
-                $statement = $pdo->prepare($sql);
-                $statement->execute($author_data);
-            } catch (PDOException $error) {
-                echo $sql . "<br>" . $error->getMessage();
-            }
+        /* Create a new Author object */
+        $author = new Author();
+        /* Create a new author */
+        try {
+            $author->createAuthor($_POST['author_name'], $_POST['author_surname']);
+        } catch (Exception $e) {
+            $error = $e->getMessage();
         }
     }
-} else {
-    header('Location: http://localhost/PHP/Bandymai/library_mirage/public/index.php');
-    exit();
 }
 ?>
 
 <?php require '../templates/header.php'; ?>
 
-<?php if (isset($_POST['submit'])) {
-    if ($valid_author) {
-        echo escape($_POST['author_name']) . ' ' .
-            escape($_POST['author_surname']) . ' successfully added';
-    }
-}
-?>
-
 <h2>Add a New Author</h2>
 <?php include '../templates/navigation.php'; ?>
 
-<form class="form" method="POST">
-    <div class="form-input">
+<form method="POST">
+    <?php
+    if (isset($_POST['submit'])) {
+        if ($error) {
+            /* Display errors */
+            echo '<div class="error">' . $error . '</div>';
+        } else {
+            /* Display success message */
+            echo '<div class="success">' . escape($_POST['author_name']) . ' '
+                . escape($_POST['author_surname']) . ' successfully added!</div>';
+
+            /* Clear form input after success message */
+            $_POST = [];
+        }
+    }
+    ?>
+    <div class="input-group">
         <label>Name</label>
         <input type="text" name="author_name" value="<?= isset($_POST['author_name']) ? escape($_POST['author_name']) : ''; ?>">
     </div>
-    <div class="form-input">
+    <div class="input-group">
         <label>Surname</label>
         <input type="text" name="author_surname" value="<?= isset($_POST['author_surname']) ? escape($_POST['author_surname']) : ''; ?>">
     </div>
-    <div class="form-input">
-        <input type="submit" name="submit" value="ADD">
+    <div class="input-group">
+        <button type="submit" class="btn" name="submit">ADD</button>
+    </div>
 </form>
 
 <?php require '../templates/footer.php'; ?>
