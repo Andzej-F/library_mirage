@@ -239,7 +239,6 @@ class Author
 
         if (!$this->isValidID($id)) {
             throw new Exception('No records found');
-            exit();
         }
 
         /* Search the ID on the database */
@@ -272,49 +271,49 @@ class Author
         global $pdo;
 
         /* Check that the 'id' element exists. ? */
-        if (empty($id)) {
+        if (!isset($id)) {
             //TODO delete later
             echo 'Triggered 276<br>';
             return FALSE;
+        } else {
+            /* Integer type check with filter_var(). */
+            if (filter_var($id, FILTER_VALIDATE_INT) === FALSE) {
+                //TODO delete later
+                echo 'Triggered 283<br>';
+                return FALSE;
+            }
+
+            /* check that $id is between 1 and 100 000. */
+            if (($id < 1) || ($id > 100000)) {
+                //TODO delete later
+                echo 'Triggered 290<br>';
+                return FALSE;
+            }
+
+
+            //TODO $query eina po exceptionu o ne po false
+            /* Search the ID on the database */
+            // $query = 'SELECT author_id FROM library_mirage.authors
+            //       WHERE author_id = :author_id';
+
+            // $values = [':author_id' => $id];
+
+            // try {
+            //     $res = $pdo->prepare($query);
+            //     $res->execute($values);
+            // } catch (PDOException $e) {
+            //     throw new Exception('Database query error');
+            // }
+
+            // $row = $res->fetch(PDO::FETCH_ASSOC);
+
+            // /* If there is a result: get the author's ID */
+            // if (!is_array($row)) {
+            //     // $id = intval($row['author_id'], 10);
+            //     //TODO delete later
+            //     echo 'Triggered 313<br>';
+            //     return FALSE;
         }
-
-        /* Integer type check with filter_var(). */
-        if (filter_var($id, FILTER_VALIDATE_INT) === FALSE) {
-            //TODO delete later
-            echo 'Triggered 283<br>';
-            return FALSE;
-        }
-
-        /* check that $id is between 1 and 100 000. */
-        if (($id < 1) || ($id > 100000)) {
-            //TODO delete later
-            echo 'Triggered 290<br>';
-            return FALSE;
-        }
-
-        /* Search the ID on the database */
-        $query = 'SELECT author_id FROM library_mirage.authors
-                  WHERE author_id = :author_id';
-
-        $values = [':author_id' => $id];
-
-        try {
-            $res = $pdo->prepare($query);
-            $res->execute($values);
-        } catch (PDOException $e) {
-            throw new Exception('Database query error');
-        }
-
-        $row = $res->fetch(PDO::FETCH_ASSOC);
-
-        /* If there is a result: get the author's ID */
-        if (!is_array($row)) {
-            // $id = intval($row['author_id'], 10);
-            //TODO delete later
-            echo 'Triggered 313<br>';
-            return FALSE;
-        }
-
         return TRUE;
     }
 }
