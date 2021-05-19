@@ -63,24 +63,27 @@ if (isset($_GET['author_id'])) {
     }
 } ?>
 
-<h2>Edit the Author</h2>
+<h2>Update the Author</h2>
 <?php include '../templates/navigation.php'; ?>
 
-<form class="form" method="POST">
-    <div class="form-input">
+<form method="POST">
+    <div class="input-group">
         <input type="hidden" name="author_id" value="<?php echo escape($author['author_id']); ?>">
     </div>
-    <div class="form-input">
+    <div class="input-group">
         <label>Name</label>
         <input type="text" name="author_name" value="<?php echo escape($author['author_name']); ?>">
     </div>
-    <div class="form-input">
+    <div class="input-group">
         <label>Surname</label>
     </div>
-    <div class="form-input">
+    <div class="input-group">
         <input type="text" name="author_surname" value="<?php echo escape($author['author_surname']); ?>">
     </div>
-    <input type="submit" name="submit" value="Submit">
+
+    <div class="input-group">
+        <button type="submit" class="btn" name="submit">Update</button>
+    </div>
 </form>
 
 <?php require '../templates/footer.php'; ?>

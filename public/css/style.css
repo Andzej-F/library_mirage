@@ -134,6 +134,7 @@ https: //www.w3schools.com/css/tryit.asp?filename=trycss_dropdown_button
 .new_books span {
   background-color: darkred;
   border-radius: 5px;
+  padding: 5px;
 }
 
 .new_book img {
@@ -177,10 +178,13 @@ tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
 }
 
-/* -------------------- Form --------------------*/
+/* -------------------- Form --------------------
+Form's code has been taken from:
+https: //codewithawa.com/posts/complete-user-registration-system-using-php-and-mysql-database
+*/
 form,
 .content {
-  width: 30%;
+  width: 35%;
   margin: 0px auto;
   padding: 10px;
   border: 1px solid #B0C4DE;
@@ -235,9 +239,9 @@ select {
 }
 
 .error {
-  width: 30%;
-  margin: 0px auto;
-  padding: 10px;
+  width: 45%;
+  /* margin: 0px auto; */
+  padding: 5px;
   border: 1px solid #a94442;
   color: #a94442;
   background: #f2dede;
@@ -294,7 +298,7 @@ select {
 }
 
 .footer li {
-  padding: 15px;
+  padding: 10px;
   background-color: crimson;
   border-radius: 5px;
   margin-right: 10px;

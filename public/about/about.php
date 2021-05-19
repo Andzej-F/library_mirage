@@ -4,7 +4,7 @@
 <?php include '../templates/navigation.php'; ?>
 
 <p class="about">"Library Mirage" is an ongoing CRUD web application project. <br>
-    It has been created for educational porpuses as a portfolio example.<br></p>
+    It has been created for educational purposes as a portfolio example.<br></p>
 
 <h2 class="about">Project features:</h3>
     <ul class="about">

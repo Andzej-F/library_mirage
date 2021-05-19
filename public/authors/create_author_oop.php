@@ -20,10 +20,26 @@ if (isset($_SESSION['libr_login'])) {
         $author = new Author();
 
         /* Create a new author */
-        try {
-            $author->createAuthor($_POST['author_name'], $_POST['author_surname']);
-        } catch (Exception $e) {
-            echo '<p class="error">' . $e->getMessage() . '</p>';
+        // try {
+        //     $author->createAuthor($_POST['author_name'], $_POST['author_surname']);
+        // } catch (Exception $e) {
+        //     echo '<p class="error">' . $e->getMessage() . '</p>';
+        // }
+
+        /* Create a new author */
+        $author->createAuthor($_POST['author_name'], $_POST['author_surname']);
+
+        if (count($author->errors) > 0) { ?>
+            <div class="error">
+                <?php foreach ($author->errors as $error) : ?>
+                    <p><?php echo $error ?></p>
+                <?php endforeach; ?>
+            </div>
+<?php } else {
+            echo '<div class="success">' . $name . ' ' . $surname . ' successfully added!</div>';
+
+            /* Clear form input after success message */
+            $_POST = [];
         }
     }
 }
@@ -46,6 +62,7 @@ if (isset($_SESSION['libr_login'])) {
     </div>
     <div class="input-group">
         <button type="submit" class="btn" name="submit">ADD</button>
+    </div>
 </form>
 
 <?php require '../templates/footer.php'; ?>

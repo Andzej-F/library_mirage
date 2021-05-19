@@ -28,6 +28,7 @@ class Author
         $this->id = NULL;
         $this->name = NULL;
         $this->surname = NULL;
+        $this->errors = [];
     }
 
     /* Destructor */
@@ -67,7 +68,8 @@ class Author
 
         /* Check if the author name is valid. If not, throw an exception */
         if (!$this->isNameValid($name)) {
-            throw new Exception('Invalid author name'); //
+            // throw new Exception('Invalid author name');
+            return $this->errors;
         }
 
         /* Check if the surname is valid. If not, throw an exception */
@@ -99,10 +101,8 @@ class Author
         }
 
         /* Display success message */
-        echo '<p style="color:green;">' . $name . ' ' . $surname . ' successfully added!</p>';
+        // echo '<p style="color:green;">' . $name . ' ' . $surname . ' successfully added!</p>';
 
-        /* Clear form input after success message */
-        $_POST = [];
     }
 
     /* Delete the author (selected by her/his ID) */
@@ -195,23 +195,23 @@ class Author
 
             /* String length check */
             if ((mb_strlen($name) > 64)) {
-                echo 'Input is too long';
+                $this->errors[] = 'Input is too long';
                 return FALSE;
             }
 
             /* Check that the input contains alpha characters and special characters (dot, hyphen, apostrophe) */
             if (!preg_match('/^[a-zA-Z ._-]+$/', $name)) {
-                echo 'Input has to contain only alpha characters<br>';
+                $this->errors[] = 'Input has to contain only alpha characters<br>';
                 return FALSE;
             }
 
             /* Check if the input starts with capital letter */
             if ($name != ucwords($name, " \t\r\n\f\v'")) {
-                echo 'Input must start with a capital letter<br>';
+                $this->errors[] = 'Input must start with a capital letter<br>';
                 return FALSE;
             }
         } else {
-            echo 'This field cannot be empty';
+            $this->errors[] = 'This field cannot be empty';
             return FALSE;
         }
 
