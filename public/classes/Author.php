@@ -1,27 +1,18 @@
 <?php
 
-include 'Library.php';
-
-class Author extends Library
+class Author
 {
-    private $id;
     private $name;
     private $surname;
 
     public function __construct()
     {
-        $this->id = NULL;
         $this->name = NULL;
         $this->surname = NULL;
     }
 
     public function __destruct()
     {
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getName(): ?string
@@ -127,7 +118,7 @@ class Author extends Library
             throw new Exception('Author name and surname already used');
         }
 
-        $this->id = $id;
+        // $this->id = $id;
         $this->name = $name;
         $this->surname = $surname;
 
@@ -171,17 +162,45 @@ class Author extends Library
     /* A sanitization check for the author name */
     public function isNameValid(string $name): bool
     {
-        return parent::checkName($name);
+        return $this->checkName($name);
     }
 
     /* A sanitization check for the author surname */
     public function isSurnameValid(string $surname): bool
     {
-        return parent::checkName($surname);
+        return $this->checkName($surname);
     }
 
-    /* Function returns the author's id having $name as name and $surname as surname,
-       or NULL if it's not found */
+    /* Function validates form input in the author's field */
+    public function checkName(string $name): bool
+    {
+
+        /* Check if the name field is not empty */
+        if (!empty($name)) {
+
+            /* String length check */
+            if ((mb_strlen($name) > 64)) {
+                return FALSE;
+            }
+
+            /* Check that the input contains alpha characters and special characters (dot, hyphen, apostrophe) */
+            if (!preg_match('/^[a-zA-Z ._-]+$/', $name)) {
+                return FALSE;
+            }
+
+            /* Check if the input starts with capital letter */
+            if ($name != ucwords($name, " \t\r\n\f\v'")) {
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
+
+        /* If everything is ok, return true. */
+        return TRUE;
+    }
+
+    /* Function returns the author's id or NULL if it's not found */
     public function getIdFromAuthor(string $name, string $surname): ?int
     {
         /* Global $pdo object */
@@ -229,10 +248,6 @@ class Author extends Library
         /* Global $pdo object */
         global $pdo;
 
-        if (!$this->isValidID($id)) {
-            throw new Exception('No records found');
-        }
-
         /* Search the ID on the database */
         $query = "SELECT * FROM authors WHERE author_id=:author_id";
 
@@ -253,35 +268,5 @@ class Author extends Library
         } else {
             return NULL;
         }
-    }
-
-    /* A sanitisation check for input ID */
-    public function isValidId($id): bool
-    {
-        return parent::checkId($id);
-
-        /* Global $pdo object */
-        global $pdo;
-
-        /* Search the ID on the database */
-        $query = 'SELECT author_id FROM library_mirage.authors
-                   WHERE author_id = :author_id';
-
-        $values = [':author_id' => $id];
-
-        try {
-            $res = $pdo->prepare($query);
-            $res->execute($values);
-        } catch (PDOException $e) {
-            throw new Exception('Database query error');
-        }
-
-        $row = $res->fetch(PDO::FETCH_ASSOC);
-
-        /* If there is a result: get the author's ID */
-        if (!is_array($row)) {
-            return FALSE;
-        }
-        return TRUE;
     }
 }

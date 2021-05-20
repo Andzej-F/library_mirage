@@ -56,7 +56,7 @@ function validBook(): bool
     return $valid;
 }
 
-function valTitle(string $title): bool
+function valTitle(string $title, int $limit): bool
 {
     /* Initialize the return variable */
     $valid = TRUE;
@@ -65,8 +65,8 @@ function valTitle(string $title): bool
         /* Title length check */
         $len = mb_strlen($title);
 
-        if (($len > 255)) {
-            $errorMsg[] = 'Name cannot be longer than 255 characters<br>';
+        if (($len > $limit)) {
+            $errorMsg[] = "Name cannot be longer than $limit characters<br>";
             $valid = FALSE;
         }
 

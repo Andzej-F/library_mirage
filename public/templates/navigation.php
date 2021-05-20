@@ -19,7 +19,7 @@
                         <div class="dropdown-content">
                             <a href="http://localhost/PHP/Bandymai/library_mirage/public/books/read_book.php">Books</a>
                             <?php if (isset($_SESSION['libr_login'])) : ?>
-                                <a href="http://localhost/PHP/Bandymai/library_mirage/public/books/create_book.php">Add a New Book</a>
+                                <a href="http://localhost/PHP/Bandymai/library_mirage/public/books/create_book_oop.php">Add a New Book</a>
                             <?php endif; ?>
                         </div>
                     </div>
