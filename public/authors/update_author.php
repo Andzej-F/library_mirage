@@ -12,7 +12,7 @@ if (isset($_SESSION['libr_login'])) {
     require '../../config.php';
 
     /* Include the Author class file */
-    require '../classes/author_class.php';
+    require '../classes/Author.php';
 
     /* Create a new Author object */
     $author = new Author();
@@ -32,7 +32,6 @@ if (isset($_SESSION['libr_login'])) {
 
 /* Author array from the database  */
 $author_db = $author->getAuthorById($_GET['author_id']);
-
 ?>
 
 <?php require '../templates/header.php'; ?>
@@ -43,12 +42,12 @@ $author_db = $author->getAuthorById($_GET['author_id']);
     <?php
     if (isset($_POST['submit'])) {
         if ($error) {
-            /* Display errors */
+            /* Display error */
             echo '<div class="error">' . $error . '</div>';
         } else {
             /* Display success message */
-            echo '<div class="success">' . escape($_POST['author_name']) . ' '
-                . escape($_POST['author_surname']) . ' successfully updated!</div>';
+            echo '<div class="success">' . escape($author->getName()) . ' '
+                . escape($author->getSurname()) . ' successfully updated!</div>';
         }
     }
     ?>

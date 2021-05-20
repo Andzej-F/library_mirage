@@ -46,7 +46,6 @@ function validBook(): bool
         valGenre($_POST['book_genre']) &&
         valYear($_POST['book_year']) &&
         valPages($_POST['book_pages']) &&
-        valISBN($_POST['book_isbn']) &&
         valStock($_POST['book_stock']) &&
         valAbout($_POST['book_about'])
     ) {
@@ -181,33 +180,6 @@ function valPages(string $pages): bool
 
     return $valid;
 }
-
-function valISBN(string $isbn): bool
-{
-    $valid = TRUE;
-
-    if (isset($isbn)) {
-        /* Check if the value is integer */
-        if (valInt($isbn)) {
-            if (($isbn < 1000)) {
-                $errorMsg[] = 'ISBN value cannot be lower than 1000.<br>';
-                $valid = FALSE;
-            }
-            if (($isbn >= 10000)) {
-                $errorMsg[] = 'ISBN value cannot be greater than 10000.<br>';
-                $valid = FALSE;
-            }
-        }
-    } else {
-        $errorMsg[] = 'Please enter the number of ISBN<br>';
-        $valid = FALSE;
-    }
-
-    dispErr($errorMsg);
-
-    return $valid;
-}
-
 
 function valStock(string $stock): bool
 {

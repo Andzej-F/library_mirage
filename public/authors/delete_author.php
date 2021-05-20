@@ -12,7 +12,7 @@ if (isset($_SESSION['libr_login'])) {
     require '../../config.php';
 
     /* Include the Author class file */
-    require '../classes/author_class.php';
+    require '../classes/Author.php';
 
     /* Create a new Author object */
     $author = new Author();

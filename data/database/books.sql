@@ -9,7 +9,6 @@ CREATE TABLE `books` (
   `book_genre` varchar(64) NOT NULL,
   `book_year` int(4) NOT NULL,
   `book_pages` int(4) NOT NULL,
-  `book_isbn` int(4) NOT NULL,
   `book_stock` int(3) DEFAULT 0,
   `book_about` text DEFAULT NULL,
   PRIMARY KEY (`book_id`),

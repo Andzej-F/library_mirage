@@ -111,10 +111,6 @@ require "../templates/header.php";
         <input type="text" name="book_pages" value="<?php echo escape($result['book_pages']); ?>"><br>
     </div>
     <div class="form-input">
-        <label>ISBN</label>
-        <input type="text" name="book_isbn" value="<?php echo escape($result['book_isbn']); ?>"><br>
-    </div>
-    <div class="form-input">
         <label>Stock</label>
         <input type="text" name="book_stock" value="<?php echo escape($result['book_stock']); ?>"><br>
     </div>

@@ -16,7 +16,7 @@ if (isset($_SESSION['libr_login'])) {
         require '../../config.php';
 
         /* Include the Author class file */
-        require '../classes/author_class.php';
+        require '../classes/Author.php';
 
         /* Create a new Author object */
         $author = new Author();
@@ -43,8 +43,8 @@ if (isset($_SESSION['libr_login'])) {
             echo '<div class="error">' . $error . '</div>';
         } else {
             /* Display success message */
-            echo '<div class="success">' . escape($_POST['author_name']) . ' '
-                . escape($_POST['author_surname']) . ' successfully added!</div>';
+            echo '<div class="success">' . escape($author->getName()) . ' '
+                . escape($author->getSurname()) . ' successfully added!</div>';
 
             /* Clear form input after success message */
             $_POST = [];

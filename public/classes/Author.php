@@ -1,6 +1,8 @@
 <?php
 
-class Author
+include 'Library.php';
+
+class Author extends Library
 {
     private $id;
     private $name;
@@ -17,7 +19,6 @@ class Author
     {
     }
 
-    //TODO delete "getters" and "setters" if not used
     public function getId(): ?int
     {
         return $this->id;
@@ -43,8 +44,6 @@ class Author
         $name = trim($name);
         $surname = trim($surname);
 
-        /* Author validation */
-
         /* Check if the author name is valid. If not, throw an exception */
         if (!$this->isNameValid($name)) {
             throw new Exception('Invalid author name');
@@ -59,6 +58,10 @@ class Author
         if (!is_null($this->getIdFromAuthor($name, $surname))) {
             throw new Exception('Author already exists');
         }
+
+        /* Validation succeeded. Set the class properties (name and surname) */
+        $this->name = $name;
+        $this->surname = $surname;
 
         /* Insert query template */
         $query = 'INSERT INTO library_mirage.authors (author_name, author_surname)
@@ -84,7 +87,7 @@ class Author
         global $pdo;
 
         /* Select query template */
-        $query = 'SELECT * FROM `authors` WHERE 1';
+        $query = 'SELECT * FROM `library_mirage`.`authors` WHERE 1';
 
         /* Execute the query */
         try {
@@ -123,6 +126,10 @@ class Author
         if (!is_null($idFromAuthor) && ($idFromAuthor != $id)) {
             throw new Exception('Author name and surname already used');
         }
+
+        $this->id = $id;
+        $this->name = $name;
+        $this->surname = $surname;
 
         $query = 'UPDATE library_mirage.authors 
                   SET author_name = :name,
@@ -164,41 +171,13 @@ class Author
     /* A sanitization check for the author name */
     public function isNameValid(string $name): bool
     {
-
-        /* Check if the name field is not empty */
-        if (!empty($name)) {
-
-            /* String length check */
-            if ((mb_strlen($name) > 64)) {
-                return FALSE;
-            }
-
-            /* Check that the input contains alpha characters and special characters (dot, hyphen, apostrophe) */
-            if (!preg_match('/^[a-zA-Z ._-]+$/', $name)) {
-                return FALSE;
-            }
-
-            /* Check if the input starts with capital letter */
-            if ($name != ucwords($name, " \t\r\n\f\v'")) {
-                return FALSE;
-            }
-        } else {
-            return FALSE;
-        }
-
-        /* If everything is ok, return true. */
-        return TRUE;
+        return parent::checkName($name);
     }
 
     /* A sanitization check for the author surname */
     public function isSurnameValid(string $surname): bool
     {
-        /* "isNameValid()" function is used
-           to avoid code repetition */
-        if (!$this->isNameValid($surname)) {
-            return FALSE;
-        }
-        return TRUE;
+        return parent::checkName($surname);
     }
 
     /* Function returns the author's id having $name as name and $surname as surname,
@@ -277,24 +256,12 @@ class Author
     }
 
     /* A sanitisation check for input ID */
-    public function isValidId(string $id): bool
+    public function isValidId($id): bool
     {
+        return parent::checkId($id);
+
         /* Global $pdo object */
         global $pdo;
-
-        /* Check that the 'id' element exists. ? */
-        if (!isset($id)) {
-            return FALSE;
-        }
-        /* Integer type check with filter_var(). */
-        if (filter_var($id, FILTER_VALIDATE_INT) === FALSE) {
-            return FALSE;
-        }
-
-        /* check that $id is between 1 and 100 000. */
-        if (($id < 1) || ($id > 100000)) {
-            return FALSE;
-        }
 
         /* Search the ID on the database */
         $query = 'SELECT author_id FROM library_mirage.authors
