@@ -17,7 +17,7 @@ body {
 }
 
 .main_page_background {
-  background-image: url('http://localhost/PHP/Bandymai/library_mirage/data/images/library_photo.png');
+  background-image: url('http://localhost/PHP/Bandymai/library_mirage/public/data/images/library_photo.png');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;

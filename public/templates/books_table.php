@@ -24,8 +24,8 @@ if (is_array($result)) { ?>
                         <?php echo escape($row['author_surname']); ?>
                     </td>
                     <?php if (isset($_SESSION['libr_login'])) : ?>
-                        <td><a href="./update_book_oop.php?book_id=<?php echo $row['book_id']; ?>">UPDATE</a></td>
-                        <td><a href="./delete_book_oop.php?book_id=<?php echo $row['book_id']; ?>">DELETE</a></td>
+                        <td><a href="./update_book.php?book_id=<?php echo $row['book_id']; ?>">UPDATE</a></td>
+                        <td><a href="./delete_book.php?book_id=<?php echo $row['book_id']; ?>">DELETE</a></td>
                     <?php endif; ?>
             </tr>
         <?php endforeach; ?>

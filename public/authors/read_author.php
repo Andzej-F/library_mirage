@@ -21,7 +21,7 @@ try {
 }
 
 include '../templates/header.php';
+
 include '../templates/authors_table.php';
 
-?>
-<?php include '../templates/footer.php'; ?>
+include '../templates/footer.php';

@@ -55,7 +55,7 @@ class Author
         $this->surname = $surname;
 
         /* Insert query template */
-        $query = 'INSERT INTO library_mirage.authors (author_name, author_surname)
+        $query = 'INSERT INTO authors (author_name, author_surname)
                   VALUES (:name, :surname)';
 
         /* Values array for PDO */
@@ -79,7 +79,7 @@ class Author
         global $pdo;
 
         /* Select query template */
-        $query = 'SELECT * FROM `library_mirage`.`authors` WHERE 1';
+        $query = 'SELECT * FROM `authors` WHERE 1';
 
         /* Execute the query */
         try {
@@ -123,7 +123,7 @@ class Author
         $this->name = $name;
         $this->surname = $surname;
 
-        $query = 'UPDATE library_mirage.authors 
+        $query = 'UPDATE authors 
                   SET author_name = :name,
                   author_surname = :surname
                   WHERE author_id = :id';
@@ -147,7 +147,7 @@ class Author
     {
         global $pdo;
 
-        $query = 'DELETE FROM library_mirage.authors
+        $query = 'DELETE FROM authors
                   WHERE (author_id = :id)';
 
         $values = [':id' => $id];
@@ -221,7 +221,7 @@ class Author
         $id = NULL;
 
         /* Search the ID on the database */
-        $query = 'SELECT author_id FROM library_mirage.authors
+        $query = 'SELECT author_id FROM authors
                   WHERE author_name = :name AND author_surname = :surname';
 
         $values = [':name' => $name, ':surname' => $surname];

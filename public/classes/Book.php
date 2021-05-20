@@ -3,20 +3,10 @@
 class Book
 {
     private $title;
-    private $genre;
-    private $year;
-    private $pages;
-    private $stock;
-    private $about;
 
     public function __construct()
     {
         $this->title = NULL;
-        // $this->$genre = NULL;
-        // $this->$year = NULL;
-        // $this->$pages = NULL;
-        // $this->$stock = NULL;
-        // $this->$about = NULL;
     }
 
     public function __destruct()
@@ -79,7 +69,7 @@ class Book
 
         $this->title = $title;
 
-        $query = "INSERT INTO `library_mirage`.`books`(
+        $query = "INSERT INTO `books`(
                     `book_title`,
                     `book_author_id`,
                     `book_genre`,
@@ -179,7 +169,7 @@ class Book
 
         $this->title = $title;
 
-        $query = 'UPDATE `library_mirage`.`books`
+        $query = 'UPDATE `books`
                     SET `book_id` = :id,
                     `book_title` = :title,
                     `book_author_id` = :author_id,                  
@@ -322,7 +312,7 @@ class Book
         $id = NULL;
 
         /* Search the ID on the database */
-        $query = 'SELECT `book_id` FROM `library_mirage`.`books` WHERE (book_title = :title)';
+        $query = 'SELECT `book_id` FROM `books` WHERE (book_title = :title)';
         $values = [':title' => $title];
 
         try {
