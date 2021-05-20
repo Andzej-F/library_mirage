@@ -29,7 +29,9 @@
             exit();
         }
     }
+
     require '../templates/header.php';
+
     if ($results && ($statement->rowCount() > 0)) { ?>
         <h2>Books</h2>
         <?php include '../templates/navigation.php'; ?>
@@ -55,8 +57,8 @@
                             <?php echo escape($result['author_surname']); ?>
                         </td>
                         <?php if (isset($_SESSION['libr_login'])) : ?>
-                            <td><a href="../books/update.php?book_id=<?php echo escape($result['book_id']); ?>">UPDATE</a></td>
-                            <td><a href="../books/delete.php?book_id=<?php echo escape($result['book_id']); ?>">DELETE</a></td>
+                            <td><a href="../books/update_book_oop.php?book_id=<?= escape($result['book_id']); ?>">UPDATE</a></td>
+                            <td><a href="../books/delete_book_oop.php?book_id=<?= escape($result['book_id']); ?>">DELETE</a></td>
                         <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
