@@ -66,7 +66,7 @@ $author_db = $author->getAuthorById($_GET['author_id']);
     </div>
 
     <div class="input-group">
-        <button type="submit" class="btn" name="submit">Update</button>
+        <button type="submit" class="btn" name="submit">UPDATE</button>
     </div>
 </form>
 

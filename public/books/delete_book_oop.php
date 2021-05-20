@@ -11,39 +11,40 @@ if (isset($_SESSION['libr_login'])) {
     /* Include the database connection file */
     require '../../config.php';
 
-    /* Include the Author class file */
-    require '../classes/Author.php';
+    /* Include the Book class file */
+    require '../classes/Book.php';
 
-    /* Create a new Author object */
-    $author = new Author();
+    /* Create a new Book object */
+    $book = new Book();
     /* Initial value for error string  */
     $error = '';
 
-    if (isset($_GET['author_id'])) {
+    if (isset($_GET['book_id'])) {
         /* Author id from the database  */
-        $id = $_GET['author_id'];
+        $id = $_GET['book_id'];
 
-        /* Get author's name and surname */
-        $author_db = $author->getAuthorById($id);
+        /* Get book's title */
+        $book_db = $book->getBookById($id);
 
-        /* Delete a new author */
+        /* Delete the book */
         try {
-            $author->deleteAuthor($id);
+            $book->deleteBook($id);
         } catch (Exception $e) {
             $error = $e->getMessage();
         }
-        echo '<div class="success">' . escape($author_db['author_name']) . ' '
-            . escape($author_db['author_surname']) . ' successfully deleted!</div>';
+        echo '<div class="success">' . escape($book_db['book_title']) . ' successfully deleted!</div>';
     }
 
+
     try {
-        $result = $author->readAuthor();
+        $result = $book->readBook();
     } catch (Exception $e) {
         $error = $e->getMessage();
     }
 
     include '../templates/header.php';
-    include '../templates/authors_table.php';
+
+    include '../templates/books_table.php';
 }
 ?>
 <?php include '../templates/footer.php'; ?>

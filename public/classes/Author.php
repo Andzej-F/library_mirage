@@ -67,6 +67,7 @@ class Author
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
+            //TODO delete all Database query errro r line numbers
             throw new Exception('Database query error');
         }
     }
@@ -159,19 +160,19 @@ class Author
         }
     }
 
-    /* A sanitization check for the author name */
+    /* Author form input validation functions */
+
     public function isNameValid(string $name): bool
     {
         return $this->checkName($name);
     }
 
-    /* A sanitization check for the author surname */
     public function isSurnameValid(string $surname): bool
     {
         return $this->checkName($surname);
     }
 
-    /* Function validates form input in the author's field */
+    /* A sanitization check for the author name and surname */
     public function checkName(string $name): bool
     {
 

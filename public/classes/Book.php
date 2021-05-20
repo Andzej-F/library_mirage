@@ -25,7 +25,7 @@ class Book
 
     public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
 
@@ -77,8 +77,9 @@ class Book
             throw new Exception('Not valid book description');
         }
 
-        $query =
-            "INSERT INTO `library_mirage`.`books`(
+        $this->title = $title;
+
+        $query = "INSERT INTO `library_mirage`.`books`(
                     `book_title`,
                     `book_author_id`,
                     `book_genre`,
@@ -117,7 +118,10 @@ class Book
     {
         global $pdo;
 
-        $query = 'SELECT * FROM `library_mirage`.`books` WHERE 1';
+        $query = "SELECT `book_id`, `book_title`, `author_name`, `author_surname` 
+                FROM `books` 
+	            INNER JOIN `authors`
+                ON `books`.`book_author_id`=`authors`.`author_id`";
 
         try {
             $res = $pdo->prepare($query);
@@ -129,110 +133,104 @@ class Book
         return $books;
     }
 
-    // /* Update book */
-    // public function updateBook(int $id, string $title, int $author_id, string $genre, int $year, int $pages, int $stock, string $about)
-    // {
-    //     global $pdo;
+    /* Update book */
+    public function updateBook(
+        $id,
+        $title,
+        $author_id,
+        $genre,
+        $year,
+        $pages,
+        $stock,
+        $about
+    ) {
+        global $pdo;
 
-    //     $title = trim($title);
-    //     $genre = trim($genre);
-    //     $year = trim($year);
-    //     $pages = trim($pages);
-    //     $stock = trim($stock);
-    //     $about = trim($about);
+        $title = trim($title);
+        $genre = trim($genre);
+        $year = trim($year);
+        $pages = trim($pages);
+        $stock = trim($stock);
+        $about = trim($about);
 
-    //     /* Check if the ID is valid */
-    //     if (!$this->isIdValid($id)) {
-    //         throw new Exception('Not valid book ID');
-    //     }
+        if (!$this->isTitleValid($title)) {
+            throw new Exception('Not valid book title');
+        }
 
-    //     /* Check if the user name is valid. */
-    //     if (!$this->isTitleValid($title)) {
-    //         throw new Exception('Not valid user name');
-    //     }
+        if (!$this->isGenreValid($genre)) {
+            throw new Exception('Not valid book genre');
+        }
 
-    //     /* Check if the ID is valid */
-    //     if (!$this->isIdValid($author_id)) {
-    //         throw new Exception('Not valid book ID');
-    //     }
+        if (!$this->isYearValid($year)) {
+            throw new Exception('Not valid book issue year');
+        }
 
-    //     /* Check if an account having the same name already exists (except for this one). */
-    //     $idFromName = $this->getIdFromName($name);
+        if (!$this->isPagesValid($pages)) {
+            throw new Exception('Not valid book pages');
+        }
 
-    //     if (!is_null($idFromName) && ($idFromName != $id)) {
-    //         throw new Exception('User name already used');
-    //     }
+        if (!$this->isStockValid($stock)) {
+            throw new Exception('Not valid book stock number');
+        }
 
-    //     /* Finally, edit the account */
+        if (!$this->isAboutValid($about)) {
+            throw new Exception('Not valid book description');
+        }
 
-    //     /* Edit query template */
-    //     $query = 'UPDATE myschema.accounts SET account_name = :name, account_passwd = :passwd, account_enabled = :enabled WHERE account_id = :id';
+        $this->title = $title;
 
-    //     /* Password hash */
-    //     $hash = password_hash(
-    //         $passwd,
-    //         PASSWORD_DEFAULT
-    //     );
+        $query = 'UPDATE `library_mirage`.`books`
+                    SET `book_id` = :id,
+                    `book_title` = :title,
+                    `book_author_id` = :author_id,                  
+                    `book_genre` = :genre,
+                    `book_year` = :year,
+                    `book_pages` = :pages,
+                    `book_stock` = :stock,
+                    `book_about` = :about
+                WHERE `book_id` = :id';
 
-    //     /* Int value for the $enabled variable (0 = false, 1 = true) */
-    //     $intEnabled = $enabled ? 1 : 0;
+        $values = [
+            'id' => $id,
+            ':title' => $title,
+            ':author_id' => $author_id,
+            ':genre' => $genre,
+            ':year' => $year,
+            ':pages' => $pages,
+            ':stock' => $stock,
+            ':about' => $about
+        ];
 
-    //     /* Values array for PDO */
-    //     $values = array(':name' => $name, ':passwd' => $hash, ':enabled' => $intEnabled, ':id' => $id);
+        try {
+            $res = $pdo->prepare($query);
+            $res->execute($values);
+        } catch (PDOException $e) {
+            /* If there is a PDO exception, throw a standard exception */
+            throw new Exception('Database query error');
+        }
+    }
 
-    //     /* Execute the query */
-    //     try {
-    //         $res = $pdo->prepare($query);
-    //         $res->execute($values);
-    //     } catch (PDOException $e) {
-    //         /* If there is a PDO exception, throw a standard exception */
-    //         throw new Exception('Database query error');
-    //     }
-    // }
 
-    // /* Delete an account (selected by its ID) */
-    // public function deleteAccount(int $id)
-    // {
-    //     /* Global $pdo object */
-    //     global $pdo;
+    /* Delete the account (selected by its ID) */
+    public function deleteBook(int $id)
+    {
+        /* Global $pdo object */
+        global $pdo;
 
-    //     /* Check if the ID is valid */
-    //     if (!$this->isIdValid($id)) {
-    //         throw new Exception('Not valid account ID');
-    //     }
+        /* Query template */
+        $query = 'DELETE FROM books WHERE (book_id = :id)';
 
-    //     /* Query template */
-    //     $query = 'DELETE FROM myschema.accounts WHERE (account_id = :id)';
+        $values = [':id' => $id];
 
-    //     /* Values array for PDO */
-    //     $values = array(':id' => $id);
+        try {
+            $res = $pdo->prepare($query);
+            $res->execute($values);
+        } catch (PDOException $e) {
+            throw new Exception('Database query error');
+        }
+    }
 
-    //     /* Execute the query */
-    //     try {
-    //         $res = $pdo->prepare($query);
-    //         $res->execute($values);
-    //     } catch (PDOException $e) {
-    //         /* If there is a PDO exception, throw a standard exception */
-    //         throw new Exception('Database query error');
-    //     }
-
-    //     /* Delete the Sessions related to the account */
-    //     $query = 'DELETE FROM myschema.account_sessions WHERE (account_id = :id)';
-
-    //     /* Values array for PDO */
-    //     $values = array(':id' => $id);
-
-    //     /* Execute the query */
-    //     try {
-    //         $res = $pdo->prepare($query);
-    //         $res->execute($values);
-    //     } catch (PDOException $e) {
-    //         /* If there is a PDO exception, throw a standard exception */
-    //         throw new Exception('Database query error');
-    //     }
-    // }
-
-    /* Input validation */
+    /* Book form input validation */
     public function isTitleValid($title): bool
     {
         return $this->valText($title, 64);
@@ -342,5 +340,39 @@ class Book
         }
 
         return $id;
+    }
+
+    /* Display the list of books */
+    public function getBookById(int $id): ?array
+    {
+        /* Global $pdo object */
+        global $pdo;
+
+        /* Search the ID on the database */
+        $query = "SELECT * FROM `books` 
+	            INNER JOIN `authors`
+                ON `books`.`book_author_id`=`authors`.`author_id`
+                WHERE `book_id`=:book_id";
+
+        $values = [':book_id' => $id];
+
+        try {
+            $res = $pdo->prepare($query);
+            $res->execute($values);
+        } catch (PDOException $e) {
+            throw new Exception('Database query error');
+        }
+
+        $result = $res->fetch(PDO::FETCH_ASSOC);
+
+        if (is_array($result)) {
+
+            return $result;
+            echo '<pre>';
+            print_r($result);
+            echo '</pre>';
+        } else {
+            return NULL;
+        }
     }
 }
