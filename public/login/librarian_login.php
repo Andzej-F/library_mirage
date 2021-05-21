@@ -63,7 +63,7 @@ if (isset($loginMsg)) {
 
 <?php include '../templates/header.php'; ?>
 
-<h2>Books</h2>
+<h2>Login</h2>
 
 <?php include '../templates/navigation.php'; ?>
 

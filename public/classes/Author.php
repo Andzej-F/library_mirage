@@ -67,7 +67,6 @@ class Author
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            //TODO delete all Database query errro r line numbers
             throw new Exception('Database query error');
         }
     }

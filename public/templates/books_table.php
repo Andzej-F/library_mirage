@@ -17,15 +17,15 @@ if (is_array($result)) { ?>
             <tr>
                 <?php foreach ($result as $row) : ?>
                     <td>
-                        <?php echo escape($row['book_title']); ?>
+                        <?= escape($row['book_title']); ?>
                     </td>
                     <td>
-                        <?php echo escape($row['author_name']); ?>
-                        <?php echo escape($row['author_surname']); ?>
+                        <?= escape($row['author_name']); ?>
+                        <?= escape($row['author_surname']); ?>
                     </td>
                     <?php if (isset($_SESSION['libr_login'])) : ?>
-                        <td><a href="./update_book.php?book_id=<?php echo $row['book_id']; ?>">UPDATE</a></td>
-                        <td><a href="./delete_book.php?book_id=<?php echo $row['book_id']; ?>">DELETE</a></td>
+                        <td><a href="./update_book.php?book_id=<?= $row['book_id']; ?>">UPDATE</a></td>
+                        <td><a href="./delete_book.php?book_id=<?= $row['book_id']; ?>">DELETE</a></td>
                     <?php endif; ?>
             </tr>
         <?php endforeach; ?>

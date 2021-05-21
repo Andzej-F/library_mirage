@@ -29,12 +29,22 @@
                 </li>
                 <li>
                     <div class="dropdown">
-                        <button class="dropbtn">Login</button>
+                        <button class="dropbtn">Librarian</button>
                         <div class="dropdown-content">
                             <?php if (isset($_SESSION['libr_login']) === FALSE) : ?>
-                                <a href="<?= $address; ?>/login/librarian_login.php">Librarian Login</a>
+                                <a href="<?= $address; ?>/login/librarian_login.php">Login</a>
                             <?php endif; ?>
                             <a href="<?= $address; ?>/login/librarian_logout.php">Logout</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <button class="dropbtn">Reader</button>
+                        <div class="dropdown-content">
+                            <a href="<?= $address; ?>/login/reader_login.php">Login</a>
+                            <a href="<?= $address; ?>/login/reader_register.php">Register</a>
+                            <a href="<?= $address; ?>/login/reader_logout.php">Logout</a>
                         </div>
                     </div>
                 </li>
