@@ -109,6 +109,9 @@ class Account
             throw new Exception('Database query error 108');
         }
 
+        //TODO modification to original script
+        $this->id = $pdo->lastInsertId();
+
         /* Return the new ID */
         return $pdo->lastInsertId();
     }
@@ -122,7 +125,7 @@ class Account
         /* Check if the ID is valid */
         if (!$this->isIdValid($id)) {
             //TODO delete exception messages line numbers
-            throw new Exception('Invalid account ID 123');
+            throw new Exception('Invalid account ID 125');
         }
 
         /* Query template */

@@ -53,7 +53,9 @@ $book_db = $book->getBookById($_GET['book_id']);
 <?php require '../templates/header.php'; ?>
 
 <h2>Update the Book</h2>
+
 <?php include '../templates/navigation.php'; ?>
+
 <form method="POST">
     <?php
     if (isset($_POST['submit'])) {

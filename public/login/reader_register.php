@@ -14,13 +14,13 @@ $account = new Account();
 
 if (isset($_POST['rd_reg'])) {
     try {
-        $newId = $account->addAccount($_POST['rd_uname'], $_POST['rd_pswd']);
+        $_SESSION['account_id'] = $account->addAccount($_POST['rd_uname'], $_POST['rd_pswd']);
     } catch (Exception $e) {
         echo $e->getMessage();
         die();
     }
-
-    //echo 'The new account ID is ' . $newId . '<br>';
+    // $_SESSION['account_id'] = $newId;
+    // $_SESSION['success_reg'] = 'The new account ID is ' . $newId . '<br>';
 
     /* After successful registration redirect reader to the home page */
     header('Location: http://localhost/PHP/Bandymai/library_mirage/public/login/reader_home.php');
