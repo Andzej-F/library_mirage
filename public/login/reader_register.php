@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require '../../config.php';
+require '../../common.php';
 
 /* Include the Account class file */
 require '../classes/Account.php';

@@ -39,7 +39,7 @@ $account = new Account();
 /*	Uncomment the following code blocks, one at a time, to test different Account operations. */
 
 
-// 1. Insert a new account (execute twice to test the "already existing" account error)
+// ------------------ 1. Insert a new account (execute twice to test the "already existing" account error)
 /*
 try
 {
@@ -54,7 +54,7 @@ catch (Exception $e)
 echo 'The new account ID is ' . $newId;
 */
 
-// 2. Edit an account. Try passing invalid parameters to test error messages.
+// ------------------ 2. Edit an account. Try passing invalid parameters to test error messages.
 /*
 $accountId = 1;
 
@@ -71,7 +71,7 @@ catch (Exception $e)
 echo 'Account edit successful.';
 */
 
-// 3. Delete an account.
+// ------------------ 3. Delete an account.
 /*
 $accountId = 1;
 
@@ -88,7 +88,7 @@ catch (Exception $e)
 echo 'Account delete successful.';
 */
 
-// 4. Login with username and password.
+// ------------------ 4. Login with username and password.
 /*
 $login = FALSE;
 
@@ -107,6 +107,8 @@ if ($login)
 	echo 'Authentication successful.';
 	echo 'Account ID: ' . $account->getId() . '<br>';
 	echo 'Account name: ' . $account->getName() . '<br>';
+	//TODO set librarian S_Session login variable
+	// $_SESSION['libr_login'] = $input_email;
 }
 else
 {
@@ -114,7 +116,7 @@ else
 }
 */
 
-// 5. Session login
+// ------------------ 5. Session login
 /*
 $login = FALSE;
 
@@ -140,7 +142,7 @@ else
 }
 */
 
-// 6. Logout.
+// ------------------ 6. Logout.
 /*
 try
 {
@@ -167,7 +169,7 @@ try
 		echo 'Account ID: ' . $account->getId() . '<br>';
 		echo 'Account name: ' . $account->getName() . '<br>';
 	}
-	else
+	else.
 	{
 		echo 'Authentication failed.<br>';
 	}
@@ -181,7 +183,7 @@ catch (Exception $e)
 echo 'Logout successful.';
 */
 
-// 7. Close other open Sessions (if any).
+// ------------------ 7. Close other open Sessions (if any).
 /*
 try
 {
