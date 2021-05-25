@@ -1,65 +1,68 @@
 <?php
+
 session_start();
 
-require '../../common.php';
+/* Include the file with additional functions */
+require '../../../common.php';
 
-/* Include the Account class file */
-require '../classes/Account.php';
+/* Initial value for error string  */
+$error = '';
 
-/* Include the database connection file */
-require '../../config.php';
 
-/* Create a new Account object */
-$account = new Account();
+if (isset($_POST['login_btn'])) {
 
-// 4. Login with username and password.
-if (isset($_POST['login'])) {
-    $login = FALSE;
+    /* Include the database connection file */
+    require '../../../config.php';
 
-    $_SESSION['log_name'] = $_POST['log_name'];
-    $_SESSION['log_pass'] = $_POST['log_pass'];
+    /* Include the account class file */
+    require '../../classes/Account.php';
+
+    /* Create a new account object */
+    $account = new Account();
 
     try {
-        $login = $account->login($_POST['log_name'], $_POST['log_pass']);
+        $account->login($_POST['rd_log_email'], $_POST['rd_log_passwd']);
     } catch (Exception $e) {
-        echo $e->getMessage();
-        die();
+        $error = $e->getMessage();
     }
-
-    if ($login) {
-        echo 'Authentication successful.';
-        echo 'Account ID: ' . $account->getId() . '<br>';
-        echo 'Account name: ' . $account->getName() . '<br>';
-    } else {
-        echo 'Authentication failed.';
-    }
-    header("Location: $address/login/reader_home.php");
 }
 
-include '../templates/header.php'; ?>
+?>
 
-<h2>Reader Login Page</h2>
+<?php require '../../templates/header.php'; ?>
 
-<?php include '../templates/navigation.php'; ?>
-<?php if (isset($_GET['login'])) : ?>
-    <form method="post">
-        <div class="input-group">
-            <label>Username</label>
-            <input type="text" name="log_name" placeholder="Enter username"><br>
-        </div>
-        <!-- <div class="input-group">
+<h2>Reader Login</h2>
+<?php include '../../templates/navigation.php'; ?>
+
+<form method="POST">
+    <?php
+    if (isset($_POST['login_btn'])) {
+        if ($error) {
+
+            /* Display error */
+            echo '<div class="error">' . $error . '</div>';
+        } else {
+
+            /* Display success message */
+            echo '<div class="success">' . escape($account->getEmail()) . ' successfully logged in!</div>';
+
+            /* Clear form input after success message */
+            $_POST = [];
+        }
+    }
+    ?>
+    <div class="input-group">
         <label>Email</label>
-        <input type="text" name="rd_eml" placeholder="Enter email"><br>
-    </div> -->
-        <div class="input-group">
-            <label>Password</label>
-            <input type="password" name="log_pass" placeholder="Enter password">
-        </div>
+        <input type="text" name="rd_log_email" value="<?= isset($_POST['rd_log_email']) ? escape($_POST['rd_log_email']) : ''; ?>" placeholder="Enter email"><br>
+    </div>
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" name="rd_log_passwd" placeholder="Enter password">
+    </div>
+    <div class="input-group">
+        <button type="submit" class="btn" name="login_btn">Log In</button>
+    </div>
+</form>
 
-        <div class="input-group">
-            <button type="submit" class="btn" name="login">LOGIN</button>
-        </div>
-    </form>
-<?php endif;
 
-include '../templates/footer.php';
+<?php require '../../templates/footer.php';

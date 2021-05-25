@@ -1,84 +1,68 @@
 <?php
+
 session_start();
 
-require '../../config.php';
-require './librarian_validation.php';
+/* Include the file with additional functions */
+require '../../../common.php';
 
-if (isset($_SESSION['libr_login'])) {
-    header("Location: $address/index.php");
-    exit();
-}
+/* Initial value for error string  */
+$error = '';
 
-if (isset($_POST['btn_login'])) {
-    $input_email = $_POST["input_email"];
-    $input_password = $_POST["input_password"];
 
-    if (valLibrLogin($input_email, $input_password)) {
-        try {
-            $sql = 'SELECT * FROM `librarians`
-                    WHERE `libr_email`=:input_email';
+if (isset($_POST['login_btn'])) {
 
-            $select_stmt = $pdo->prepare($sql);
-            $select_stmt->bindParam(':input_email', $input_email);
+    /* Include the database connection file */
+    require '../../../config.php';
 
-            $select_stmt->execute();
-            $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
+    /* Include the account class file */
+    require '../../classes/Account.php';
 
-            if ($select_stmt->rowCount() > 0) {
+    /* Create a new account object */
+    $account = new Account();
 
-                $dbemail = $row['libr_email'];
-                $dbpassword = $row['libr_password'];
-
-                if (($input_email == $dbemail) &&
-                    (password_verify($input_password, $dbpassword))
-                ) {
-                    $_SESSION['libr_login'] = $input_email;
-                    $loginMsg = 'Librarian... Successfully Login...';
-                    header("refresh:1; url=$address/index.php");
-                } else {
-                    $errorMsg[] = 'Wrong email or password<br>';
-                }
-            } else {
-                $errorMsg[] = 'Wrong email or password<br>';
-            }
-        } catch (PDOException $error) {
-            echo 'Database connection error<br>';
-        }
-    } else {
-        $errorMsg[] = 'Wrong email or password';
+    try {
+        $account->login($_POST['libr_email'], $_POST['libr_passwd']);
+    } catch (Exception $e) {
+        $error = $e->getMessage();
     }
-}
-
-if (isset($errorMsg)) {
-    foreach ($errorMsg as $error) {
-        echo $error;
-    }
-}
-
-if (isset($loginMsg)) {
-    echo $loginMsg;
 }
 
 ?>
 
-<?php include '../templates/header.php'; ?>
+<?php require '../../templates/header.php'; ?>
 
-<h2>Login</h2>
+<h2>Librarian Login</h2>
+<?php include '../../templates/navigation.php'; ?>
 
-<?php include '../templates/navigation.php'; ?>
+<form method="POST">
+    <?php
+    if (isset($_POST['login_btn'])) {
+        if ($error) {
 
-<form class="form-login" method="post">
+            /* Display error */
+            echo '<div class="error">' . $error . '</div>';
+        } else {
+
+            /* Display success message */
+            echo '<div class="success">' . escape($account->getEmail()) . ' successfully logged in!</div>';
+
+            /* Clear form input after success message */
+            $_POST = [];
+        }
+    }
+    ?>
     <div class="input-group">
         <label>Email</label>
-        <input type="text" name="input_email" placeholder="Enter email"><br>
+        <input type="text" name="libr_email" value="<?= isset($_POST['libr_email']) ? escape($_POST['libr_email']) : ''; ?>" placeholder="Enter email"><br>
     </div>
     <div class="input-group">
         <label>Password</label>
-        <input type="password" name="input_password" placeholder="Enter password">
+        <input type="password" name="libr_passwd" placeholder="Enter password">
     </div>
     <div class="input-group">
-        <button type="submit" class="btn" name="btn_login">Log In</button>
+        <button type="submit" class="btn" name="login_btn">Log In</button>
     </div>
 </form>
 
-<?php include '../templates/footer.php'; ?>
+
+<?php require '../../templates/footer.php';

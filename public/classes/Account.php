@@ -22,7 +22,7 @@ class Account
 
     public function __construct()
     {
-        /* Initialize the $id and $name variables to NULL */
+        /* Initialize the $id and $email variables to NULL */
         $this->id = NULL;
         $this->email = NULL;
         $this->role = NULL;
@@ -55,12 +55,12 @@ class Account
         global $pdo;
 
         /* Trim the strings to remove extra spaces */
-        $name = trim($email);
+        $email = trim($email);
         $passwd = trim($passwd);
 
         /* Check if the user email is valid. If not, throw an exception */
         if (!$this->isEmailValid($email)) {
-            throw new Exception('Invalid user name 78');
+            throw new Exception('Invalid user email 78');
         }
 
         /* Check if the password is valid. If not, throw an exception */
@@ -71,7 +71,7 @@ class Account
         /* Check if an account having the same email already exists.
            If it does, throw an exception */
         if (!is_null($this->getIdFromEmail($email))) {
-            throw new Exception('User name not available 88');
+            throw new Exception('User email not available 88');
         }
 
         /* If validation was successful set the class properties*/
@@ -186,7 +186,7 @@ class Account
         }
     }
 
-    /* Login with username and password */
+    /* Login with useremail and password */
     public function login(string $email, string $passwd): bool
     {
         /* Global $pdo object */
@@ -234,7 +234,8 @@ class Account
                 /* Register current sessions  */
                 if ($row['acct_role'] === 'librarian') {
                     $_SESSION['libr_login'] = $this->email;
-                } elseif ($row['acct_role'] === 'reader') {
+                }
+                if ($row['acct_role'] === 'reader') {
                     $_SESSION['reader_login'] = $this->email;
                 }
                 /* Finally, Return TRUE */
@@ -259,8 +260,7 @@ class Account
 
         /* Reset the account-related properties */
         $this->id = NULL;
-        $this->name = NULL;
-        $this->authenticated = FALSE;
+        $this->email = NULL;
     }
 
     /* A sanitization check for the account email */

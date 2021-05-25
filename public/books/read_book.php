@@ -13,7 +13,7 @@ require '../classes/Book.php';
 /* Create a new Book object */
 $book = new Book();
 
-/* Create a new author */
+/* Get book data */
 try {
     $result = $book->readBook();
 } catch (Exception $e) {

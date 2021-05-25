@@ -1,60 +1,79 @@
 <?php
 session_start();
 
-require '../../common.php';
+/* If the reader has logged in, redirect to the main page */
+// if (isset($_SESSION['reader_login'])) {
+//     header("Location: $address/index.php");
+//     exit();
+// }
 
-/* Include the Account class file */
-require '../classes/Account.php';
+require '../../../common.php';
 
-/* Include the database connection file */
-require '../../config.php';
+/* Initial value for error string  */
+$error = '';
 
-/* Create a new Account object */
-$account = new Account();
+if (isset($_POST['reg_btn'])) {
 
-if (isset($_POST['rd_reg'])) {
+    /* Include the Account class file */
+    require '../../classes/Account.php';
+
+    /* Include the database connection file */
+    require '../../../config.php';
+
+    /* Create a new Account object */
+    $account = new Account();
+
+    $email = $_POST['rd_email'];
+    $passwd = $_POST['rd_passwd'];
     try {
-        $_SESSION['account_id'] = $account->addAccount($_POST['rd_uname'], $_POST['rd_pswd']);
+        $_SESSION['account_id'] = $account->addAccount($email, $passwd, 'reader');
     } catch (Exception $e) {
-        echo $e->getMessage();
-        die();
+        $error = $e->getMessage();
     }
-    // $_SESSION['account_id'] = $newId;
-    // $_SESSION['success_reg'] = 'The new account ID is ' . $newId . '<br>';
 
-    /* After successful registration redirect reader to the home page */
-    header('Location: http://localhost/PHP/Bandymai/library_mirage/public/login/reader_home.php');
-    exit();
+
+    /* Register reader sessions  */
+    // $_SESSION['reader_login'] = $account->getEmail();
+
+    /* After successful registration redirect reader to a reader home page */
+    // header("Location: $address/accounts/reader/reader_home.php");
+    // exit();
 }
 
 ?>
 
-<?php include '../templates/header.php'; ?>
+<?php include '../../templates/header.php'; ?>
 
-<h2>Register</h2>
+<h2>Reader Registration</h2>
 
-<?php include '../templates/navigation.php'; ?>
+<?php include '../../templates/navigation.php'; ?>
 
 <form method="post">
+    <?php
+    if (isset($_POST['reg_btn'])) {
+        if ($error) {
+            /* Display error */
+            echo '<div class="error">' . $error . '</div>';
+        } else {
+            /* Display success message */
+            echo '<div class="success">' . escape($account->getEmail()) . ' successfully logged in!</div>';
+
+            /* Clear form input after success message */
+            $_POST = [];
+        }
+    }
+    ?>
     <div class="input-group">
-        <label>Username</label>
-        <input type="text" name="rd_uname" placeholder="Enter username"><br>
-    </div>
-    <!-- <div class="input-group">
         <label>Email</label>
-        <input type="text" name="rd_eml" placeholder="Enter email"><br>
-    </div> -->
+        <input type="text" name="rd_email" value="<?= isset($_POST['rd_email']) ? escape($_POST['rd_email']) : ''; ?>" placeholder="Enter email" placeholder="Enter Email"><br>
+    </div>
     <div class="input-group">
         <label>Password</label>
-        <input type="password" name="rd_pswd" placeholder="Enter password">
+        <input type="password" name="rd_passwd" placeholder="Enter password">
     </div>
-    <!-- <div class="input-group">
-        <label>Repeat password</label>
-        <input type="password" name="rp_rd_pass" placeholder="Repeat password">
-    </div> -->
     <div class="input-group">
-        <button type="submit" class="btn" name="rd_reg">Register</button>
+        <button type="submit" class="btn" name="reg_btn">Register</button>
     </div>
 </form>
 
-<?php include '../templates/footer.php'; ?>
+<?php include '../../templates/footer.php'; ?>

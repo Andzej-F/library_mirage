@@ -1,60 +1,68 @@
 <?php
 session_start();
 
-require '../../common.php';
+require '../../../common.php';
 
 /* Include the Account class file */
-require '../classes/Account.php';
+require '../../classes/Account.php';
 
 /* Include the database connection file */
-require '../../config.php';
+require '../../../config.php';
 
 /* Create a new Account object */
 $account = new Account();
 
 // 2. Edit an account. Try passing invalid parameters to test error messages.
-if (isset($_GET['rd_edit'])) {
+if (isset($_GET['edit'])) {
+    if (isset($_POST['edit_btn'])) {
 
-    $accountId = $_SESSION['account_id'];
-    $newName = $_POST['new_name'];
-    $newPass = $_POST['new_pass'];
+        $id = $_SESSION['account_id'];
+        $newEmail = $_POST['new_email'];
+        $newPasswd = $_POST['new_pass'];
 
-    try {
-        $account->editAccount($accountId, $newName, $newPass, TRUE);
-    } catch (Exception $e) {
-        echo $e->getMessage();
-        die();
+        try {
+            $account->editAccount($id, $newEmail, $newPasswd);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            die();
+        }
+        // $_SESSION['success'] = 'Account edit successful.';
+        // unset($_GET['edit']);
+        // header("Location: $address/login/reader_home.php");
+        // exit();
     }
-    // $_SESSION['success'] = 'Account edit successful.';
-    unset($_GET['edit']);
-    // header("Location: $address/login/reader_home.php");
-    exit();
 }
+include '../../templates/header.php'; ?>
 
-include '../templates/header.php'; ?>
+<h2>Edit Account</h2>
 
-<h3>Reader Edit Account Page</h3>
+<?php include '../../templates/navigation.php'; ?>
 
-<?php include '../templates/navigation.php'; ?>
-
-<?php if (isset($_GET['edit'])) : ?>
-    <form method="post">
-        <div class="input-group">
-            <label>Username</label>
-            <input type="text" name="edit_name" placeholder="Enter username"><br>
-        </div>
-        <!-- <div class="input-group">
+<form method="post">
+    <?php
+    if (isset($_POST['reg_btn'])) {
+        if ($error) {
+            /* Display error */
+            echo '<div class="error">' . $error . '</div>';
+        } else {
+            /* Display success message */
+            echo '<div class="success">' . escape($account->getEmail()) . ' successfully changed in!</div>';
+            /* Clear form input after success message */
+            $_POST = [];
+        }
+    }
+    ?>
+    <div class="input-group">
         <label>Email</label>
-        <input type="text" name="rd_eml" placeholder="Enter email"><br>
-    </div> -->
-        <div class="input-group">
-            <label>Password</label>
-            <input type="password" name="edit_pass" placeholder="Enter password">
-        </div>
-        <div class="input-group">
-            <button type="submit" class="btn" name="rd_login">LOGIN</button>
-        </div>
-    </form>
-<?php endif;
+        <input type="text" name="new_email"><br>
+    </div>
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" name="new_pass">
+    </div>
+    <div class="input-group">
+        <button type="submit" class="btn" name="edit_btn">EDIT</button>
+    </div>
+</form>
 
-include '../templates/footer.php';
+<?php include '../../templates/footer.php';
