@@ -1,15 +1,3 @@
-    <?php
-
-    /* Local computer address string */
-    $address = 'http://localhost/PHP/Bandymai/library_mirage/public';
-
-    /* Check if the reader is logged in */
-    $readerLogged = isset($_SESSION['reader_login']);
-
-    /* Check if the librarian is logged in */
-    $librLogged = isset($_SESSION['libr_login']);
-
-    ?>
     <div class="row header">
         <nav>
             <ul>
@@ -37,33 +25,40 @@
                     </div>
                 </li>
                 <li>
-                    <?php if ($readerLogged === FALSE) : ?>
+                    <?php
+                    /* Do not display "Librarian" tab when reader is logged*/
+                    if (!$readerLogged) : ?>
                         <div class="dropdown">
                             <button class="dropbtn">Librarian</button>
                             <div class="dropdown-content">
-                                <?php if ($librLogged === FALSE) : ?>
+                                <?php if (!$librLogged) : ?>
                                     <a href="<?= $address; ?>/accounts/librarian/libr_login.php">Login</a>
                                 <?php endif; ?>
-                                <a href="<?= $address; ?>/accounts/librarian/libr_logout.php?libr_logout">Logout</a>
+                                <?php if ($librLogged) : ?>
+                                    <a href="<?= $address; ?>/accounts/librarian/libr_logout.php?libr_logout">Logout</a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php endif; ?>
                 </li>
                 <li>
-                    <?php if ($librLogged === FALSE) : ?>
+                    <?php
+                    /* Do not display "Reader" tab when librarian is logged*/
+                    if (!$librLogged) : ?>
                         <div class="dropdown">
                             <button class="dropbtn">Reader</button>
                             <div class="dropdown-content">
-                                <?php if ($readerLogged === FALSE) : ?>
+                                <?php if (!$readerLogged) : ?>
                                     <a href="<?= $address; ?>/accounts/reader/reader_login.php">Login</a>
                                     <a href="<?= $address; ?>/accounts/reader/reader_register.php">Register</a>
                                 <?php endif; ?>
-                                <a href="<?= $address; ?>/accounts/reader/reader_settings.php">Account Settings</a>
-                                <a href="<?= $address; ?>/accounts/reader/reader_logout.php?reader_logout">Logout</a>
+                                <?php if ($readerLogged) : ?>
+                                    <a href="<?= $address; ?>/accounts/reader/reader_settings.php">Account Settings</a>
+                                    <a href="<?= $address; ?>/accounts/reader/reader_logout.php?reader_logout">Logout</a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php endif; ?>
-
                 </li>
             </ul>
         </nav>

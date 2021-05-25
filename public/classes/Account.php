@@ -161,6 +161,9 @@ class Account
             throw new Exception('User email already used 187');
         }
 
+        $this->id = $id;
+        $this->email = $email;
+
         /* Edit query template */
         $query = 'UPDATE accounts 
                  SET acct_email = :email, acct_passwd = :passwd
@@ -361,5 +364,33 @@ class Account
         }
 
         return $id;
+    }
+
+    /* Returns the email of a given account id */
+    public function getEmailById(int $id): ?array
+    {
+        /* Global $pdo object */
+        global $pdo;
+
+        /* Search the ID on the database */
+        $query = "SELECT `acct_email` FROM `accounts` 
+                WHERE `acct_id`=:acct_id";
+
+        $values = [':acct_id' => $id];
+
+        try {
+            $res = $pdo->prepare($query);
+            $res->execute($values);
+        } catch (PDOException $e) {
+            throw new Exception('Database query error');
+        }
+
+        $email = $res->fetch(PDO::FETCH_ASSOC);
+
+        if (is_array($email)) {
+        } else {
+            return NULL;
+        }
+        return $email;
     }
 }

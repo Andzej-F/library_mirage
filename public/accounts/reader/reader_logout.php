@@ -25,6 +25,10 @@ if (isset($_GET['reader_logout'])) {
         $error = $e->getMessage();
     }
     unset($_SESSION["reader_login"]);
+    session_destroy();
     header("Location: $address/index.php");
-    exit();
+    // echo '<pre>';
+    // print_r(get_defined_vars());
+    // echo '</pre>';
+    // // exit();
 }

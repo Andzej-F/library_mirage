@@ -26,14 +26,17 @@ if (isset($_POST['reg_btn'])) {
     $email = $_POST['rd_email'];
     $passwd = $_POST['rd_passwd'];
     try {
-        $_SESSION['account_id'] = $account->addAccount($email, $passwd, 'reader');
+        /* Save account id in session array */
+        // $_SESSION['account_id'] = $account->addAccount($email, $passwd, 'reader');
+        $account->addAccount($email, $passwd, 'reader');
     } catch (Exception $e) {
         $error = $e->getMessage();
     }
 
+    $_SESSION['reg_account'] = $account;
 
     /* Register reader sessions  */
-    // $_SESSION['reader_login'] = $account->getEmail();
+    $_SESSION['reader_login'] = $account->getEmail();
 
     /* After successful registration redirect reader to a reader home page */
     // header("Location: $address/accounts/reader/reader_home.php");
