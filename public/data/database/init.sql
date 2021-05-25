@@ -41,78 +41,10 @@ CREATE TABLE `books` (
 --
 
 CREATE TABLE `accounts` (
-  `account_id` int(10) UNSIGNED NOT NULL,
-  `account_name` varchar(255) NOT NULL,
-  `account_passwd` varchar(255) NOT NULL,
-  `account_reg_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `account_enabled` tinyint(1) UNSIGNED NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Indexes for table `accounts`
---
-ALTER TABLE `accounts`
-  ADD PRIMARY KEY (`account_id`),
-  ADD UNIQUE KEY `account_name` (`account_name`);
-
---
--- AUTO_INCREMENT for table `accounts`
---
-ALTER TABLE `accounts`
-  MODIFY `account_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
-
---
--- Table structure for table `account_sessions`
---
-
-CREATE TABLE `account_sessions` (
-  `session_id` varchar(255) NOT NULL,
-  `account_id` int(10) UNSIGNED NOT NULL,
-  `login_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Indexes for table `account_sessions`
---
-ALTER TABLE `account_sessions`
-  ADD PRIMARY KEY (`session_id`);
-
-
-  --
--- Table structure for table `roles`
---
-
-CREATE TABLE `roles` (
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `account_id` int(10) UNSIGNED NOT NULL,
-  `role_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Indexes for table `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`role_id`),
-  ADD UNIQUE KEY `role_name` (`role_name`),
-  ADD CONSTRAINT `FK_RoleAccount` FOREIGN KEY (`account_id`)
-  REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-
---
--- AUTO_INCREMENT for table `roles`
---
-ALTER TABLE `roles`
-  MODIFY `role_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
-
---
--- Table structure for table `librarians`
---
-
-CREATE TABLE `librarians` (
-  `libr_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `libr_email` varchar(64) NOT NULL,
-  `libr_password` varchar(64) NOT NULL,
-  PRIMARY KEY (`libr_id`)
+  `acct_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `acct_email` varchar(64) NOT NULL,
+  `acct_role` varchar(64) NOT NULL,
+  `acct_passwd` varchar(64) NOT NULL,
+  PRIMARY KEY (`acct_id`),
+  UNIQUE KEY `acct_email` (`acct_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

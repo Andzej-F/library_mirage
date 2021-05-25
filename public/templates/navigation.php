@@ -32,9 +32,9 @@
                         <button class="dropbtn">Librarian</button>
                         <div class="dropdown-content">
                             <?php if (isset($_SESSION['libr_login']) === FALSE) : ?>
-                                <a href="<?= $address; ?>/login/librarian_login.php">Login</a>
+                                <a href="<?= $address; ?>/accounts/librarian/libr_login_oop.php">Login</a>
                             <?php endif; ?>
-                            <a href="<?= $address; ?>/login/librarian_logout.php">Logout</a>
+                            <a href="<?= $address; ?>/accounts/librarian/libr_logout_oop.php">Logout</a>
                         </div>
                     </div>
                 </li>

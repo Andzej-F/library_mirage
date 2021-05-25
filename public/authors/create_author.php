@@ -20,7 +20,7 @@ if (isset($_SESSION['libr_login'])) {
 
         /* Create a new Author object */
         $author = new Author();
-        /* Create a new author */
+
         try {
             $author->createAuthor($_POST['author_name'], $_POST['author_surname']);
         } catch (Exception $e) {

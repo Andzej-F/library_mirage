@@ -5,9 +5,10 @@
 
 <h2 class="about">Blogs/Tutorials/Websites</h2>
 <ul class="about">
-    <li><a href="https://alexwebdevelop.com/user-authentication/">PHP LOGIN AND AUTHENTICATION</a></li>
-    <li><a href="https://alexwebdevelop.com/php-with-mysql/">How to use PHP with MySQL</a></li>
     <li><a href="https://www.taniarascia.com/create-a-simple-database-app-connecting-to-mysql-with-php/">Build a PHP & MySQL CRUD Database App From Scratch</a></li>
+    <li><a href="https://alexwebdevelop.com/php-with-mysql/">How to use PHP with MySQL</a></li>
+    <li><a href="https://alexwebdevelop.com/user-authentication/">PHP LOGIN AND AUTHENTICATION</a></li>
+    <li><a href="https://alexwebdevelop.com/php-security-mastery/">PHP Security Mastery Course</a></li>
     <li><a href="https://www.onlyxcodes.com/2018/12/multi-user-role-based-login-in-php-with-mysql-pdo.html">Multi User Role Based Login in PHP with MySQL PDO</a></li>
     <li><a href="https://stackoverflow.com/">stackoverflow</a></li>
     <li><a href="https://www.w3resource.com/">w3resource</a></li>
