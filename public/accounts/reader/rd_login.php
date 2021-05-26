@@ -5,10 +5,6 @@ session_start();
 /* Include the file with additional functions */
 require '../../../common.php';
 
-/* Initial values for error conditions  */
-$error = '';
-$login = FALSE;
-
 /* Include the database connection file */
 require '../../../config.php';
 
@@ -18,13 +14,20 @@ require '../../classes/Account.php';
 /* Create a new account object */
 $account = new Account();
 
+/* Set initial value for $login variable */
+$login = TRUE;
+
+/* Check if the reader is logged */
+// if ($readerLogged) {
 if (isset($_POST['login'])) {
     try {
-        $login = $account->login($_POST['log_email'], $_POST['log_passwd']);
+        $account->login($_POST['log_email'], $_POST['log_passwd']);
     } catch (Exception $e) {
+        $login = FALSE;
         $error = $e->getMessage();
     }
 }
+// }
 ?>
 
 <?php require '../../templates/header.php'; ?>
@@ -36,15 +39,12 @@ if (isset($_POST['login'])) {
 <form method="POST">
     <?php
     if (isset($_POST['login'])) {
-        if ($error) {
-            /* Display error */
-            echo '<div class="error">' . $error . '</div>';
-        }
         if ($login) {
-            /* Display success message */
-            echo '<div class="success">' . escape($account->getEmail()) . ' successfully logged in!</div>';
-            /* Clear form input after success message */
-            $_POST = [];
+            /* Display success message and redirect to the main page */
+            showSuccess($account->getEmail(), 'logged in');
+            header("Refresh:2; url= $address/index.php");
+        } else {
+            showError($error);
         }
     }
     ?>
@@ -61,5 +61,4 @@ if (isset($_POST['login'])) {
     </div>
 </form>
 
-
-<?php require '../../templates/footer.php';
+<?php require '../../templates/footer.php'; ?>

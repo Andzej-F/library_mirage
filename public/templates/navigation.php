@@ -65,7 +65,7 @@
                                 <?php endif; ?>
                                 <?php if ($readerLogged) : ?>
                                     <a href="<?= $address; ?>/accounts/reader/rd_settings.php">Account Settings</a>
-                                    <a href="<?= $address; ?>/accounts/reader/rd_logout.php">Logout</a>
+                                    <a href="<?= $address; ?>/accounts/reader/rd_logout.php?logout">Logout</a>
                                 <?php endif; ?>
                             </div>
                         </div>

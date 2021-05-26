@@ -17,15 +17,11 @@ class Account
     /* The email of the logged in account */
     private $email;
 
-    /* The role(reader or librarian) of the logged in account */
-    private $role;
-
     public function __construct()
     {
         /* Initialize the $id and $email variables to NULL */
         $this->id = NULL;
         $this->email = NULL;
-        $this->role = NULL;
     }
 
     public function __destruct()
@@ -42,13 +38,7 @@ class Account
         return $this->email;
     }
 
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-
-    /* Add a new account to the system and return its ID */
+    /* Add a new account to the library and return its ID */
     public function addAccount(string $email, string $passwd, string $role): int
     {
         /* Global $pdo object */

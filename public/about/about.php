@@ -8,13 +8,13 @@
 
 <h2 class="about">Current project features:</h3>
     <ul class="about">
-        <li><b>CRUD</b> model for managing authors and books data</li>
+        <li><b>CRUD</b> model for managing author, book data and reader account</li>
         <li><b>search</b> book option(available after login or registration)</li>
         <li><b>plain</b> PHP (no frameworks or libraries)</li>
         <li>main focus on the application's <b>back-end</b></li>
         <li><b>OOP</b> code style</li>
         <li>use <b>PDO</b> for database connection</li>
-        <li><b>multi-user</b> (librarian, reader) login</li>
+        <li><b>multi-user</b> (librarian, reader) login and registration (only reader)</li>
     </ul>
 
     <h2 class="about">Upcoming updates:</h3>

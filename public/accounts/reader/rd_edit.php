@@ -39,19 +39,16 @@ include '../../templates/header.php'; ?>
     <?php
     if (isset($_POST['edit'])) {
         if ($error) {
-            /* Display error */
-            echo '<div class="error">' . $error . '</div>';
+            showError($error);
         } else {
-            /* Display success message */
-            echo '<div class="success">' . $account->getEmail() . ' account successfully edited in!</div>';
-            /* Clear form input after success message */
-            $_POST = [];
+            showSuccess($account->getEmail(), 'edited');
         }
     }
+
     ?>
     <div class="input-group">
         <label>Email</label>
-        <input type="text" name="new_email" value="<?= isset($_POST['new_email']) ? escape($_POST['new_email']) : ''; ?>" placeholder="Enter new email"><br>
+        <input type="text" name="new_email" value="<?= isset($_POST['new_email']) ? escape($_POST['new_email']) : escape($_SESSION['reader_login']); ?>" placeholder="Enter new email"><br>
     </div>
     <div class="input-group">
         <label>Password</label>

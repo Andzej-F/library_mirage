@@ -21,31 +21,27 @@ if (isset($_POST['register'])) {
     $passwd = $_POST['passwd'];
 
     try {
-        /* Save account id in session array */
+        /* Save account id in Session array */
         $_SESSION['acct_id'] = $account->addAccount($email, $passwd, 'reader');
     } catch (Exception $e) {
         $error = $e->getMessage();
     }
 }
-
 include '../../templates/header.php'; ?>
 
 <h2>Reader Registration</h2>
 
 <?php include '../../templates/navigation.php'; ?>
 
-<form method="post">
+<form method="POST">
     <?php
     if (isset($_POST['register'])) {
         if ($error) {
-            /* Display error */
-            echo '<div class="error">' . $error . '</div>';
+            showError($error);
         } else {
-            /* Display success message */
-            echo '<div class="success">' . escape($account->getEmail()) . ' successfully logged in!</div>';
-
-            /* Clear form input after success message */
-            $_POST = [];
+            /* Display success message and redirect to the main page */
+            showSuccess($account->getEmail(), 'registered');
+            header("Refresh:2; url= $address/index.php");
         }
     }
     ?>
