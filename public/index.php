@@ -3,7 +3,9 @@
 session_start();
 
 include './templates/header.php';
-include '../common.php'; ?>
+include '../common.php';
+?>
+
 
 <body class="main_page_background">
     <h1 class="header">Library "Mirage"</h1>
@@ -13,7 +15,7 @@ include '../common.php'; ?>
 
         <div class="row">
             <?php
-            if ($librLogged || $readerLogged) {
+            if (isset($_SESSION['libr_login']) || isset($_SESSION['reader_login'])) {
                 include './search/search_field.php';
             } ?>
         </div>

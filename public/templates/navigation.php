@@ -1,3 +1,14 @@
+    <?php
+    /* Local computer address string */
+    $address = 'http://localhost/PHP/Bandymai/library_mirage/public';
+
+    /* Check if the reader is logged in */
+    $readerLogged = isset($_SESSION['reader_login']);
+
+    /* Check if the librarian is logged in */
+    $librLogged = isset($_SESSION['libr_login']);
+
+    ?>
     <div class="row header">
         <nav>
             <ul>
@@ -49,12 +60,12 @@
                             <button class="dropbtn">Reader</button>
                             <div class="dropdown-content">
                                 <?php if (!$readerLogged) : ?>
-                                    <a href="<?= $address; ?>/accounts/reader/reader_login.php">Login</a>
-                                    <a href="<?= $address; ?>/accounts/reader/reader_register.php">Register</a>
+                                    <a href="<?= $address; ?>/accounts/reader/rd_login.php">Login</a>
+                                    <a href="<?= $address; ?>/accounts/reader/rd_register.php?">Register</a>
                                 <?php endif; ?>
                                 <?php if ($readerLogged) : ?>
-                                    <a href="<?= $address; ?>/accounts/reader/reader_settings.php">Account Settings</a>
-                                    <a href="<?= $address; ?>/accounts/reader/reader_logout.php?reader_logout">Logout</a>
+                                    <a href="<?= $address; ?>/accounts/reader/rd_settings.php">Account Settings</a>
+                                    <a href="<?= $address; ?>/accounts/reader/rd_logout.php">Logout</a>
                                 <?php endif; ?>
                             </div>
                         </div>

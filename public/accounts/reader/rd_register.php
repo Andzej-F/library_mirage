@@ -1,18 +1,12 @@
 <?php
 session_start();
 
-/* If the reader has logged in, redirect to the main page */
-// if (isset($_SESSION['reader_login'])) {
-//     header("Location: $address/index.php");
-//     exit();
-// }
-
 require '../../../common.php';
 
 /* Initial value for error string  */
 $error = '';
 
-if (isset($_POST['reg_btn'])) {
+if (isset($_POST['register'])) {
 
     /* Include the Account class file */
     require '../../classes/Account.php';
@@ -23,29 +17,18 @@ if (isset($_POST['reg_btn'])) {
     /* Create a new Account object */
     $account = new Account();
 
-    $email = $_POST['rd_email'];
-    $passwd = $_POST['rd_passwd'];
+    $email = $_POST['email'];
+    $passwd = $_POST['passwd'];
+
     try {
         /* Save account id in session array */
-        // $_SESSION['account_id'] = $account->addAccount($email, $passwd, 'reader');
-        $account->addAccount($email, $passwd, 'reader');
+        $_SESSION['acct_id'] = $account->addAccount($email, $passwd, 'reader');
     } catch (Exception $e) {
         $error = $e->getMessage();
     }
-
-    $_SESSION['reg_account'] = $account;
-
-    /* Register reader sessions  */
-    $_SESSION['reader_login'] = $account->getEmail();
-
-    /* After successful registration redirect reader to a reader home page */
-    // header("Location: $address/accounts/reader/reader_home.php");
-    // exit();
 }
 
-?>
-
-<?php include '../../templates/header.php'; ?>
+include '../../templates/header.php'; ?>
 
 <h2>Reader Registration</h2>
 
@@ -53,7 +36,7 @@ if (isset($_POST['reg_btn'])) {
 
 <form method="post">
     <?php
-    if (isset($_POST['reg_btn'])) {
+    if (isset($_POST['register'])) {
         if ($error) {
             /* Display error */
             echo '<div class="error">' . $error . '</div>';
@@ -68,14 +51,14 @@ if (isset($_POST['reg_btn'])) {
     ?>
     <div class="input-group">
         <label>Email</label>
-        <input type="text" name="rd_email" value="<?= isset($_POST['rd_email']) ? escape($_POST['rd_email']) : ''; ?>" placeholder="Enter email" placeholder="Enter Email"><br>
+        <input type="text" name="email" value="<?= isset($_POST['email']) ? escape($_POST['email']) : ''; ?>" placeholder="Enter email" placeholder="Enter Email"><br>
     </div>
     <div class="input-group">
         <label>Password</label>
-        <input type="password" name="rd_passwd" placeholder="Enter password">
+        <input type="password" name="passwd" placeholder="Enter password">
     </div>
     <div class="input-group">
-        <button type="submit" class="btn" name="reg_btn">Register</button>
+        <button type="submit" class="btn" name="register">Register</button>
     </div>
 </form>
 

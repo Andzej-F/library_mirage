@@ -8,6 +8,7 @@ require '../../../common.php';
 /* Initial value for error string  */
 $error = '';
 
+
 /* Include the database connection file */
 require '../../../config.php';
 
@@ -17,13 +18,11 @@ require '../../classes/Account.php';
 /* Create a new account object */
 $account = new Account();
 
-if (isset($_GET['libr_logout'])) {
-    try {
-        $account->logout();
-    } catch (Exception $e) {
-        $error = $e->getMessage();
-    }
-    unset($_SESSION["libr_login"]);
-    header("Location: $address/index.php");
-    exit();
+try {
+    $account->logout();
+} catch (Exception $e) {
+    $error = $e->getMessage();
 }
+session_destroy();
+
+header("Location: $address/index.php");

@@ -11,18 +11,12 @@ require '../../classes/Account.php';
 require '../../../config.php';
 
 /* Create a new Account object */
-// $account = new Account();
+$account = new Account();
 
 if (isset($_GET['delete'])) {
-    echo '==============================<br>';
-    echo $account->getId() . '<br>';
-    echo $account->getEmail() . '<br>';
-    echo '<pre>';
-    print_r(get_defined_vars());
-    echo '</pre>';
 
-    /* Delete an account. */
-    $accountId = $account->getId();
+    // /* Delete an account. */
+    $accountId = $_SESSION['acct_id'];
 
     try {
         $account->deleteAccount($accountId);
@@ -30,15 +24,18 @@ if (isset($_GET['delete'])) {
         echo $e->getMessage();
     }
 
-    echo 'Account delete successful.';
+    echo '<div class="success">' . escape($account->getEmail()) . ' successfully deleted!</div>';
+    session_destroy();
+    header("Location: $address/index.php");
+    exit();
 }
 
 include '../../templates/header.php'; ?>
 
 <h2>Account Settings</h2>
 
-<?php include '../../templates/navigation.php'; ?>
-
+<?php include '../../templates/navigation.php';
+?>
 <ul>
     <li>
         <h3><a href="<?= $address; ?>/accounts/reader/reader_edit.php?edit">Edit Account</a></h3>
@@ -47,5 +44,4 @@ include '../../templates/header.php'; ?>
         <h3><a href="<?= $address; ?>/accounts/reader/reader_settings.php?delete">Delete Account</a></h3>
     </li>
 </ul>
-
 <?php include '../../templates/footer.php';

@@ -8,35 +8,33 @@ require '../../../common.php';
 /* Initial value for error string  */
 $error = '';
 
+/* Include the database connection file */
+require '../../../config.php';
 
-if (isset($_POST['login_btn'])) {
+/* Include the account class file */
+require '../../classes/Account.php';
 
-    /* Include the database connection file */
-    require '../../../config.php';
+/* Create a new account object */
+$account = new Account();
 
-    /* Include the account class file */
-    require '../../classes/Account.php';
-
-    /* Create a new account object */
-    $account = new Account();
-
+if (isset($_POST['login'])) {
     try {
-        $account->login($_POST['libr_email'], $_POST['libr_passwd']);
+        $account->login($_POST['email'], $_POST['passwd']);
     } catch (Exception $e) {
         $error = $e->getMessage();
     }
 }
-
 ?>
 
 <?php require '../../templates/header.php'; ?>
 
 <h2>Librarian Login</h2>
+
 <?php include '../../templates/navigation.php'; ?>
 
 <form method="POST">
     <?php
-    if (isset($_POST['login_btn'])) {
+    if (isset($_POST['login'])) {
         if ($error) {
 
             /* Display error */
@@ -44,7 +42,8 @@ if (isset($_POST['login_btn'])) {
         } else {
 
             /* Display success message */
-            echo '<div class="success">' . escape($account->getEmail()) . ' successfully logged in!</div>';
+            echo '<div class="success">' . escape($account->getEmail()) .
+                ' successfully logged in!</div>';
 
             /* Clear form input after success message */
             $_POST = [];
@@ -53,14 +52,14 @@ if (isset($_POST['login_btn'])) {
     ?>
     <div class="input-group">
         <label>Email</label>
-        <input type="text" name="libr_email" value="<?= isset($_POST['libr_email']) ? escape($_POST['libr_email']) : ''; ?>" placeholder="Enter email"><br>
+        <input type="text" name="email" value="<?= isset($_POST['email']) ? escape($_POST['email']) : ''; ?>" placeholder="Enter email"><br>
     </div>
     <div class="input-group">
         <label>Password</label>
-        <input type="password" name="libr_passwd" placeholder="Enter password">
+        <input type="password" name="passwd" placeholder="Enter password">
     </div>
     <div class="input-group">
-        <button type="submit" class="btn" name="login_btn">Log In</button>
+        <button type="submit" class="btn" name="login">Log In</button>
     </div>
 </form>
 

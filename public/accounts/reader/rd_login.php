@@ -5,28 +5,26 @@ session_start();
 /* Include the file with additional functions */
 require '../../../common.php';
 
-/* Initial value for error string  */
+/* Initial values for error conditions  */
 $error = '';
+$login = FALSE;
 
+/* Include the database connection file */
+require '../../../config.php';
 
-if (isset($_POST['login_btn'])) {
+/* Include the account class file */
+require '../../classes/Account.php';
 
-    /* Include the database connection file */
-    require '../../../config.php';
+/* Create a new account object */
+$account = new Account();
 
-    /* Include the account class file */
-    require '../../classes/Account.php';
-
-    /* Create a new account object */
-    $account = new Account();
-
+if (isset($_POST['login'])) {
     try {
-        $account->login($_POST['log_email'], $_POST['log_passwd']);
+        $login = $account->login($_POST['log_email'], $_POST['log_passwd']);
     } catch (Exception $e) {
         $error = $e->getMessage();
     }
 }
-
 ?>
 
 <?php require '../../templates/header.php'; ?>
@@ -37,11 +35,12 @@ if (isset($_POST['login_btn'])) {
 
 <form method="POST">
     <?php
-    if (isset($_POST['login_btn'])) {
+    if (isset($_POST['login'])) {
         if ($error) {
             /* Display error */
             echo '<div class="error">' . $error . '</div>';
-        } else {
+        }
+        if ($login) {
             /* Display success message */
             echo '<div class="success">' . escape($account->getEmail()) . ' successfully logged in!</div>';
             /* Clear form input after success message */
@@ -58,7 +57,7 @@ if (isset($_POST['login_btn'])) {
         <input type="password" name="log_passwd" placeholder="Enter password">
     </div>
     <div class="input-group">
-        <button type="submit" class="btn" name="login_btn">Log In</button>
+        <button type="submit" class="btn" name="login">Log In</button>
     </div>
 </form>
 
