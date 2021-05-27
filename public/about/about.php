@@ -1,4 +1,7 @@
-<?php require '../templates/header.php'; ?>
+<?php
+session_start();
+
+require '../templates/header.php'; ?>
 
 <h2>About the Project</h2>
 <?php include '../templates/navigation.php'; ?>

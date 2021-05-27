@@ -50,18 +50,18 @@ class Account
 
         /* Check if the user email is valid. If not, throw an exception */
         if (!$this->isEmailValid($email)) {
-            throw new Exception('Invalid user email 78');
+            throw new Exception('Not valid user email');
         }
 
         /* Check if the password is valid. If not, throw an exception */
         if (!$this->isPasswdValid($passwd)) {
-            throw new Exception('Invalid password 83');
+            throw new Exception('Not valid password');
         }
 
         /* Check if an account having the same email already exists.
            If it does, throw an exception */
         if (!is_null($this->getIdFromEmail($email))) {
-            throw new Exception('User email not available 88');
+            throw new Exception('User email not available');
         }
 
         /* Insert query template */
@@ -80,16 +80,15 @@ class Account
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 108');
+            throw new Exception('Database query error');
         }
 
         /* If validation was successful set the class properties*/
         $this->id = $pdo->lastInsertId();
         $this->email = $email;
 
-        /* Register reader sessions  */
+        /* Enable reader login session, because addAccount method applies only to readers (not librarians)*/
         $_SESSION['reader_login'] = $this->email;
-        // $_SESSION['acct_id'] = $this->id;
 
         /* Return the new ID */
         return $pdo->lastInsertId();
@@ -103,7 +102,7 @@ class Account
 
         /* Check if the ID is valid */
         if (!$this->isIdValid($id)) {
-            throw new Exception('Invalid account ID 125');
+            throw new Exception('Not valid account ID');
         }
 
         /* Query template */
@@ -117,7 +116,7 @@ class Account
             $res = $pdo->prepare($query);
             $res->execute($values);
         } catch (PDOException $e) {
-            throw new Exception('Database query error 139');
+            throw new Exception('Database query error');
         }
     }
 
@@ -133,30 +132,29 @@ class Account
 
         /* Check if the ID is valid */
         if (!$this->isIdValid($id)) {
-            throw new Exception('Invalid account ID 170');
+            throw new Exception('Not valid account ID');
         }
 
         /* Check if the user email is valid. */
         if (!$this->isEmailValid($email)) {
-            throw new Exception('Invalid user email 175');
+            throw new Exception('Not valid user email');
         }
 
         /* Check if the password is valid. */
         if (!$this->isPasswdValid($passwd)) {
-            throw new Exception('Invalid password 180');
+            throw new Exception('Not valid password');
         }
 
         /* Check if an account having the same email already exists (except for this one). */
         $idFromEmail = $this->getIdFromEmail($email);
 
         if (!is_null($idFromEmail) && ($idFromEmail != $id)) {
-            throw new Exception('User email already used 187');
+            throw new Exception('User email already used');
         }
 
         /* If validation was successful set the class properties*/
         $this->id = $id;
         $this->email = $email;
-        $this->passwd = $passwd;
 
         /* Edit query template */
         $query = 'UPDATE accounts 
@@ -179,12 +177,12 @@ class Account
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 210');
+            throw new Exception('Database query error');
         }
     }
 
     /* Login with useremail and password */
-    public function login(string $email, string $passwd): bool
+    public function login(string $email, string $passwd)
     {
         /* Global $pdo object */
         global $pdo;
@@ -195,15 +193,15 @@ class Account
 
         /* Check if the user email is valid. */
         if (!$this->isEmailValid($email)) {
-            throw new Exception('Invalid user email 201');
+            throw new Exception('Not valid user email');
         }
 
         /* Check if the password is valid. */
         if (!$this->isPasswdValid($passwd)) {
-            throw new Exception('Invalid user password 206');
+            throw new Exception('Not valid user password');
         }
 
-        /* Look for the account in the db. */
+        /* Look for the account in the database. */
         $query = 'SELECT * FROM accounts 
                   WHERE (acct_email = :email)';
 
@@ -216,7 +214,7 @@ class Account
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 246');
+            throw new Exception('Database query error');
         }
 
         $row = $res->fetch(PDO::FETCH_ASSOC);
@@ -235,18 +233,21 @@ class Account
 
                 if ($row['acct_role'] === 'reader') {
                     $_SESSION['reader_login'] = $this->email;
+                    $_SESSION['acct_id'] = $this->id;
                 }
-
-                $_SESSION['acct_id'] = $this->id;
 
                 /* Finally, Return TRUE */
                 return TRUE;
             }
+
+            /* If wrong password provided, throw an exception */
+            throw new Exception('Wrong password');
         }
 
-        /* If the authentication failed: return FALSE */
-        return FALSE;
+        /* If the authentication failed, throw an exception */
+        throw new Exception('User does not exist');
     }
+
 
     /* Logout the current user */
     public function logout()
@@ -287,7 +288,6 @@ class Account
         $valid = TRUE;
 
         /* Example check: the ID must be between 1 and 1000000 */
-
         if (($id < 1) || ($id > 1000000)) {
             $valid = FALSE;
         }
@@ -334,7 +334,7 @@ class Account
 
         /* Since this method is public, we check $email again here */
         if (!$this->isEmailValid($email)) {
-            throw new Exception('Invalid user email 443');
+            throw new Exception('Not valid user email');
         }
 
         /* Initialize the return value. If no account is found, return NULL */
@@ -351,7 +351,7 @@ class Account
             $res->execute($values);
         } catch (PDOException $e) {
             /* If there is a PDO exception, throw a standard exception */
-            throw new Exception('Database query error 458');
+            throw new Exception('Database query error');
         }
 
         $row = $res->fetch(PDO::FETCH_ASSOC);

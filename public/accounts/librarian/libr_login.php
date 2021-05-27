@@ -5,22 +5,22 @@ session_start();
 /* Include the file with additional functions */
 require '../../../common.php';
 
-/* Initial value for error string  */
-$error = '';
-
 /* Include the database connection file */
 require '../../../config.php';
 
 /* Include the account class file */
 require '../../classes/Account.php';
 
-/* Create a new account object */
 $account = new Account();
 
 if (isset($_POST['login'])) {
+
+    $login = TRUE;
+
     try {
         $account->login($_POST['email'], $_POST['passwd']);
     } catch (Exception $e) {
+        $login = FALSE;
         $error = $e->getMessage();
     }
 }
@@ -35,18 +35,15 @@ if (isset($_POST['login'])) {
 <form method="POST">
     <?php
     if (isset($_POST['login'])) {
-        if ($error) {
-
-            /* Display error */
-            echo '<div class="error">' . $error . '</div>';
-        } else {
-
+        if ($login) {
             /* Display success message */
-            echo '<div class="success">' . escape($account->getEmail()) .
-                ' successfully logged in!</div>';
+            showSuccess($account->getEmail(), 'logged in');
 
-            /* Clear form input after success message */
-            $_POST = [];
+            /* Redirect to the main page */
+            header("Refresh:2; url= $address/index.php");
+        } else {
+            /* Display error message */
+            showError($error);
         }
     }
     ?>
@@ -62,6 +59,5 @@ if (isset($_POST['login'])) {
         <button type="submit" class="btn" name="login">Log In</button>
     </div>
 </form>
-
 
 <?php require '../../templates/footer.php';

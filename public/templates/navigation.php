@@ -37,7 +37,7 @@
                 </li>
                 <li>
                     <?php
-                    /* Do not display "Librarian" tab when reader is logged*/
+                    /* Do not display "Librarian" tab when reader is logged in*/
                     if (!$readerLogged) : ?>
                         <div class="dropdown">
                             <button class="dropbtn">Librarian</button>
@@ -54,7 +54,7 @@
                 </li>
                 <li>
                     <?php
-                    /* Do not display "Reader" tab when librarian is logged*/
+                    /* Do not display "Reader" tab when librarian is logged in*/
                     if (!$librLogged) : ?>
                         <div class="dropdown">
                             <button class="dropbtn">Reader</button>

@@ -1,7 +1,11 @@
-<?php require '../templates/header.php'; ?>
+<?php
+session_start();
+
+require '../templates/header.php';
+?>
 
 <h2>Resources</h2>
-<?php include '../templates/navigation.php'; ?>
+<?php require '../templates/navigation.php'; ?>
 
 <h2 class="about">Blogs/Tutorials/Websites</h2>
 <ul class="about">

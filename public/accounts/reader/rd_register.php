@@ -1,21 +1,20 @@
 <?php
 session_start();
 
+/* Include the file with additional functions */
 require '../../../common.php';
 
-/* Initial value for error string  */
-$error = '';
+/* Include the Account class file */
+require '../../classes/Account.php';
+
+/* Include the database connection file */
+require '../../../config.php';
+
+$account = new Account();
 
 if (isset($_POST['register'])) {
 
-    /* Include the Account class file */
-    require '../../classes/Account.php';
-
-    /* Include the database connection file */
-    require '../../../config.php';
-
-    /* Create a new Account object */
-    $account = new Account();
+    $register = TRUE;
 
     $email = $_POST['email'];
     $passwd = $_POST['passwd'];
@@ -24,6 +23,7 @@ if (isset($_POST['register'])) {
         /* Save account id in Session array */
         $_SESSION['acct_id'] = $account->addAccount($email, $passwd, 'reader');
     } catch (Exception $e) {
+        $register = FALSE;
         $error = $e->getMessage();
     }
 }
@@ -36,12 +36,11 @@ include '../../templates/header.php'; ?>
 <form method="POST">
     <?php
     if (isset($_POST['register'])) {
-        if ($error) {
-            showError($error);
-        } else {
-            /* Display success message and redirect to the main page */
+        if ($register) {
             showSuccess($account->getEmail(), 'registered');
             header("Refresh:2; url= $address/index.php");
+        } else {
+            showError($error);
         }
     }
     ?>

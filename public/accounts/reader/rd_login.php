@@ -14,36 +14,35 @@ require '../../classes/Account.php';
 /* Create a new account object */
 $account = new Account();
 
-/* Set initial value for $login variable */
-$login = TRUE;
-
-/* Check if the reader is logged */
-// if ($readerLogged) {
 if (isset($_POST['login'])) {
     try {
-        $account->login($_POST['log_email'], $_POST['log_passwd']);
+        /* $login will be assigned TRUE on success */
+        $login = $account->login($_POST['log_email'], $_POST['log_passwd']);
     } catch (Exception $e) {
+        /* If there is an error, assign FALSE to $login */
         $login = FALSE;
         $error = $e->getMessage();
     }
 }
-// }
 ?>
 
 <?php require '../../templates/header.php'; ?>
 
 <h2>Reader Login</h2>
 
-<?php include '../../templates/navigation.php'; ?>
+<?php require '../../templates/navigation.php'; ?>
 
 <form method="POST">
     <?php
     if (isset($_POST['login'])) {
         if ($login) {
-            /* Display success message and redirect to the main page */
+            /* Display success message */
             showSuccess($account->getEmail(), 'logged in');
+
+            /* Redirect to the main page */
             header("Refresh:2; url= $address/index.php");
         } else {
+            /* Display error message */
             showError($error);
         }
     }

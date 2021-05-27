@@ -5,9 +5,6 @@ session_start();
 /* Include the file with additional functions */
 require '../../../common.php';
 
-/* Initial value for error string  */
-$error = '';
-
 /* Include the database connection file */
 require '../../../config.php';
 
@@ -18,12 +15,20 @@ require '../../classes/Account.php';
 $account = new Account();
 
 if (isset($_GET['libr_logout'])) {
+
+    $logout = TRUE;
+
     try {
         $account->logout();
     } catch (Exception $e) {
+        $logout = TRUE;
         $error = $e->getMessage();
     }
-    unset($_SESSION["libr_login"]);
-    header("Location: $address/index.php");
-    exit();
+    if ($logout) {
+        unset($_SESSION["libr_login"]);
+        header("Location: $address/index.php");
+        exit();
+    } else {
+        showError($error);
+    }
 }

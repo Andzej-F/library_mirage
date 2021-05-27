@@ -5,9 +5,6 @@ session_start();
 /* Include the file with additional functions */
 require '../../../common.php';
 
-/* Initial value for error string  */
-$error = '';
-
 /* Include the database connection file */
 require '../../../config.php';
 
@@ -24,12 +21,13 @@ if (isset($_GET['logout'])) {
     try {
         $account->logout();
     } catch (Exception $e) {
-        $error = $e->getMessage();
         $logout = FALSE;
+        $error = $e->getMessage();
     }
 
     if ($logout) {
-        session_destroy();
+        unset($_SESSION["reader_login"]);
+        unset($_SESSION["acct_id"]);
         header("Location: $address/index.php");
         exit();
     } else {

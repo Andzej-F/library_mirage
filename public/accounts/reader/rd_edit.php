@@ -4,9 +4,6 @@ session_start();
 /* Include a file with common functions */
 require '../../../common.php';
 
-/* Initial value for error string  */
-$error = '';
-
 /* Include the Account class file */
 require '../../classes/Account.php';
 
@@ -18,6 +15,8 @@ $account = new Account();
 
 if (isset($_POST['edit'])) {
 
+    $edit = TRUE;
+
     $id = $_SESSION['acct_id'];
     $newEmail = $_POST['new_email'];
     $newPasswd = $_POST['new_pass'];
@@ -25,6 +24,7 @@ if (isset($_POST['edit'])) {
     try {
         $account->editAccount($id, $newEmail, $newPasswd);
     } catch (Exception $e) {
+        $edit = FALSE;
         $error = $e->getMessage();
     }
 }
@@ -38,13 +38,12 @@ include '../../templates/header.php'; ?>
 <form method="post">
     <?php
     if (isset($_POST['edit'])) {
-        if ($error) {
-            showError($error);
-        } else {
+        if ($edit) {
             showSuccess($account->getEmail(), 'edited');
+        } else {
+            showError($error);
         }
     }
-
     ?>
     <div class="input-group">
         <label>Email</label>
