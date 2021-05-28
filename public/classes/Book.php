@@ -18,17 +18,9 @@ class Book
         return $this->title;
     }
 
-
     /* Add a new book to the library */
-    public function createBook(
-        $title,
-        $author_id,
-        $genre,
-        $year,
-        $pages,
-        $stock,
-        $about
-    ) {
+    public function createBook($title, $author_id, $genre, $year, $pages, $stock, $about)
+    {
         global $pdo;
 
         $title = trim($title);
@@ -124,16 +116,8 @@ class Book
     }
 
     /* Update book */
-    public function updateBook(
-        $id,
-        $title,
-        $author_id,
-        $genre,
-        $year,
-        $pages,
-        $stock,
-        $about
-    ) {
+    public function updateBook($id, $title, $author_id, $genre, $year, $pages, $stock, $about)
+    {
         global $pdo;
 
         $title = trim($title);
@@ -251,8 +235,8 @@ class Book
         return $this->valText($about, 1000);
     }
 
-    /* Function validates text input for book title, genre and about
-       $limit variable defines the maximum amount of allowed characters */
+    /* Function validates text input for book "title", "genre" and "about"
+       $limit defines the maximum number of allowed characters */
     public function valText($title, $limit): bool
     {
         if (isset($title)) {
@@ -261,8 +245,8 @@ class Book
                 return FALSE;
             }
 
-            /* Check if the title consists of alpha-numeric characters */
-            if (!preg_match("/^[A-Za-z0-9]+((\s)?((\'|\-)?([A-Za-z])+))*$/", $title)) {
+            /* Check if the title consists of alpha-numeric characters and special characters(,.'-) */
+            if (!preg_match('#^[a-zA-Z0-9" *":,.!-().?";\']+$#i', $title)) {
                 return FALSE;
             }
         } else {
@@ -277,17 +261,14 @@ class Book
         if (isset($number)) {
             /* Check if provided value is of integer type */
             if (filter_var($number, FILTER_VALIDATE_INT) === FALSE) {
-                // $errorMsg[] = 'Please enter a valid number line.<br>';
                 return FALSE;
             } else {
                 /* Check if it is positive */
                 if ($number < 0) {
-                    // $errorMsg[] = 'Input value cannot be negative.<br>';
                     return FALSE;
                 }
                 /* Check if the number does not exceed the limit */
                 if (($number > $limit)) {
-                    // $errorMsg[] = 'Please enter the correct number of pages.<br>';
                     return FALSE;
                 }
             }

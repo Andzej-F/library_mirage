@@ -37,12 +37,12 @@ class Author
 
         /* Check if the author name is valid. If not, throw an exception */
         if (!$this->isNameValid($name)) {
-            throw new Exception('Invalid author name');
+            throw new Exception('Not valid author name');
         }
 
         /* Check if the surname is valid. If not, throw an exception */
         if (!$this->isSurnameValid($surname)) {
-            throw new Exception('Invalid author surname');
+            throw new Exception('Not valid author surname');
         }
 
         /* Check if the author having the same name already exists. If yes, throw an exception*/
@@ -104,11 +104,11 @@ class Author
         $surname = trim($surname);
 
         if (!$this->isNameValid($name)) {
-            throw new Exception('Invalid author name');
+            throw new Exception('Not valid author name');
         }
 
         if (!$this->isSurnameValid($surname)) {
-            throw new Exception('Invalid author surname');
+            throw new Exception('Not valid author surname');
         }
 
         /* Check if the author having the same name already exists. */
@@ -118,7 +118,6 @@ class Author
             throw new Exception('Author name and surname already used');
         }
 
-        // $this->id = $id;
         $this->name = $name;
         $this->surname = $surname;
 
@@ -127,11 +126,7 @@ class Author
                   author_surname = :surname
                   WHERE author_id = :id';
 
-        $values = [
-            ':name' => $name,
-            ':surname' => $surname,
-            ':id' => $id
-        ];
+        $values = [':name' => $name, ':surname' => $surname, ':id' => $id];
 
         try {
             $res = $pdo->prepare($query);
@@ -159,13 +154,13 @@ class Author
         }
     }
 
-    /* Author form input validation functions */
-
+    /* Author name validation function */
     public function isNameValid(string $name): bool
     {
         return $this->checkName($name);
     }
 
+    /* Author surname validation function */
     public function isSurnameValid(string $surname): bool
     {
         return $this->checkName($surname);
@@ -208,12 +203,12 @@ class Author
 
         /* Check $name again here */
         if (!$this->isNameValid($name)) {
-            throw new Exception('Invalid author name');
+            throw new Exception('Not valid author name');
         }
 
         /* Check $surname again here */
         if (!$this->isSurnameValid($surname)) {
-            throw new Exception('Invalid author surname');
+            throw new Exception('Not valid author surname');
         }
 
         /* Initialize the return value. If no id is found, return NULL */
@@ -268,5 +263,22 @@ class Author
         } else {
             return NULL;
         }
+    }
+
+    /*TODO create a function that will chaeck if author has books
+     if yes--forbid to delete the author*/
+    public function authorHasBooks($id, $name, $surname): bool
+    {
+        $result = TRUE;
+
+        if (!$this->isNameValid($name)) {
+            throw new Exception('Not valid author name');
+        }
+
+        if (!$this->isSurnameValid($surname)) {
+            throw new Exception('Not valid author surname');
+        }
+
+        return $result;
     }
 }

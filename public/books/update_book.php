@@ -34,7 +34,7 @@ if (isset($_SESSION['libr_login'])) {
                 $_POST['book_year'],
                 $_POST['book_pages'],
                 $_POST['book_stock'],
-                escape($_POST['book_about'])
+                $_POST['book_about']
             );
         } catch (Exception $e) {
             $error = $e->getMessage();

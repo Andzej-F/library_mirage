@@ -32,3 +32,10 @@ function showSuccess($email, $actionMsg)
         echo '<div class="success">' . escape($email) . ' account successfully ' . $actionMsg . ' !</div>';
     }
 }
+
+/* Function displays success messages for "author" object operations */
+function successAuthor($name, $surname, $actionMsg)
+{
+    echo '<div class="success">' . escape($name) .
+        ' ' . escape($surname) . ' successfully ' . $actionMsg . ' !</div>';
+}

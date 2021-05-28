@@ -5,25 +5,30 @@ session_start();
 /* Include the file with additional functions */
 require '../../common.php';
 
-/* Initial value for error string  */
-$error = '';
+/* Include the database connection file */
+require '../../config.php';
+
+/* Include the Author class file */
+require '../classes/Author.php';
 
 /* Check if the librarian has logged in */
 if (isset($_SESSION['libr_login'])) {
 
     if (isset($_POST['submit'])) {
-        /* Include the database connection file */
-        require '../../config.php';
 
-        /* Include the Author class file */
-        require '../classes/Author.php';
+        /* Set initial value */
+        $create = TRUE;
 
         /* Create a new Author object */
         $author = new Author();
 
         try {
-            $author->createAuthor($_POST['author_name'], $_POST['author_surname']);
+            $name = $_POST['author_name'];
+            $surname = $_POST['author_surname'];
+
+            $author->createAuthor($name, $surname);
         } catch (Exception $e) {
+            $create = FALSE;
             $error = $e->getMessage();
         }
     }
@@ -38,26 +43,25 @@ if (isset($_SESSION['libr_login'])) {
 <form method="POST">
     <?php
     if (isset($_POST['submit'])) {
-        if ($error) {
-            /* Display errors */
-            echo '<div class="error">' . $error . '</div>';
-        } else {
+        if ($create) {
             /* Display success message */
-            echo '<div class="success">' . escape($author->getName()) . ' '
-                . escape($author->getSurname()) . ' successfully added!</div>';
+            successAuthor($author->getName(), $author->getSurname(), 'added');
 
             /* Clear form input after success message */
             $_POST = [];
+        } else {
+            /* Display errors */
+            showError($error);
         }
     }
     ?>
     <div class="input-group">
         <label>Name</label>
-        <input type="text" name="author_name" value="<?= isset($_POST['author_name']) ? escape($_POST['author_name']) : ''; ?>">
+        <input type="text" name="author_name" value="<?= isset($_POST['author_name']) ? escape($name) : ''; ?>">
     </div>
     <div class="input-group">
         <label>Surname</label>
-        <input type="text" name="author_surname" value="<?= isset($_POST['author_surname']) ? escape($_POST['author_surname']) : ''; ?>">
+        <input type="text" name="author_surname" value="<?= isset($_POST['author_surname']) ? escape($surname) : ''; ?>">
     </div>
     <div class="input-group">
         <button type="submit" class="btn" name="submit">ADD</button>

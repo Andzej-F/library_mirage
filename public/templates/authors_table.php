@@ -1,4 +1,11 @@
     <?php
+    /* Populate the authors table */
+    try {
+        $result = $author->readAuthor();
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
+
     if (is_array($result)) { ?>
         <h2>Authors</h2>
         <?php include '../templates/navigation.php'; ?>
