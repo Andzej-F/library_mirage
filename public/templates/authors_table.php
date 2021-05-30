@@ -1,10 +1,6 @@
     <?php
-    /* Populate the authors table */
-    try {
-        $result = $author->readAuthor();
-    } catch (Exception $e) {
-        $error = $e->getMessage();
-    }
+    /* Display authors array */
+    $result = $author->readAuthor();
 
     if (is_array($result)) { ?>
         <h2>Authors</h2>

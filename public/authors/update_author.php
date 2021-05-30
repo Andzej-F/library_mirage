@@ -2,29 +2,31 @@
 
 session_start();
 
+/* Include the file with additional functions */
+require '../../common.php';
+
+/* Include the database connection file */
+require '../../config.php';
+
+/* Include the Author class file */
+require '../classes/Author.php';
+
 /* Check if the librarian has logged in */
 if (isset($_SESSION['libr_login'])) {
 
-    /* Include the file with additional functions */
-    require '../../common.php';
-
-    /* Include the database connection file */
-    require '../../config.php';
-
-    /* Include the Author class file */
-    require '../classes/Author.php';
-
-    /* Create a new Author object */
     $author = new Author();
 
-    /* Initial value for error string  */
-    $error = '';
-
     if (isset($_POST['submit'])) {
+        $success = TRUE;
+
+        $id = $_POST['author_id'];
+        $name = $_POST['author_name'];
+        $surname = $_POST['author_surname'];
 
         try {
-            $author->updateAuthor($_POST['author_id'], $_POST['author_name'], $_POST['author_surname']);
+            $author->updateAuthor($id, $name, $surname);
         } catch (Exception $e) {
+            $success = FALSE;
             $error = $e->getMessage();
         }
     }
@@ -41,13 +43,13 @@ $author_db = $author->getAuthorById($_GET['author_id']);
 <form method="POST">
     <?php
     if (isset($_POST['submit'])) {
-        if ($error) {
-            /* Display error */
-            echo '<div class="error">' . $error . '</div>';
+        if ($success) {
+            successAuthor($author->getName(), $author->getSurname(), 'updated');
+
+            /* Clear form input after success message */
+            $_POST = [];
         } else {
-            /* Display success message */
-            echo '<div class="success">' . escape($author->getName()) . ' '
-                . escape($author->getSurname()) . ' successfully updated!</div>';
+            showError($error);
         }
     }
     ?>
@@ -56,13 +58,13 @@ $author_db = $author->getAuthorById($_GET['author_id']);
     </div>
     <div class="input-group">
         <label>Name</label>
-        <input type="text" name="author_name" value="<?= isset($_POST['author_name']) ? escape($_POST['author_name']) : ($author_db['author_name']); ?>">
+        <input type="text" name="author_name" value="<?= isset($_POST['author_name']) ? escape($name) : ($author_db['author_name']); ?>">
     </div>
     <div class="input-group">
         <label>Surname</label>
     </div>
     <div class="input-group">
-        <input type="text" name="author_surname" value="<?= isset($_POST['author_surname']) ? escape($_POST['author_surname']) : ($author_db['author_surname']); ?>">
+        <input type="text" name="author_surname" value="<?= isset($_POST['author_surname']) ? escape($surname) : ($author_db['author_surname']); ?>">
     </div>
 
     <div class="input-group">

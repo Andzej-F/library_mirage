@@ -141,6 +141,11 @@ class Author
     {
         global $pdo;
 
+        /* Check $surname again here */
+        if ($this->authorHasBooks($id)) {
+            throw new Exception('Cannot delete, the author has books');
+        }
+
         $query = 'DELETE FROM authors
                   WHERE (author_id = :id)';
 
@@ -169,30 +174,32 @@ class Author
     /* A sanitization check for the author name and surname */
     public function checkName(string $name): bool
     {
+        /* Initialize the return variable */
+        $valid = TRUE;
 
         /* Check if the name field is not empty */
         if (!empty($name)) {
 
             /* String length check */
             if ((mb_strlen($name) > 64)) {
-                return FALSE;
+                $valid = FALSE;
             }
 
-            /* Check that the input contains alpha characters and special characters (dot, hyphen, apostrophe) */
-            if (!preg_match('/^[a-zA-Z ._-]+$/', $name)) {
-                return FALSE;
+            /* Check that the input contains alpha characters and special characters (,.!().?";'-) */
+            if (!preg_match('/^[a-zA-z ,.!().?";\'-]+$/i', $name)) {
+                $valid = FALSE;
             }
 
             /* Check if the input starts with capital letter */
-            if ($name != ucwords($name, " \t\r\n\f\v'")) {
-                return FALSE;
+            if ($name != ucwords($name, " \t\r\n\f\v")) {
+                $valid = FALSE;
             }
         } else {
-            return FALSE;
+            $valid = FALSE;
         }
 
         /* If everything is ok, return true. */
-        return TRUE;
+        return $valid;
     }
 
     /* Function returns the author's id or NULL if it's not found */
@@ -267,16 +274,44 @@ class Author
 
     /*TODO create a function that will chaeck if author has books
      if yes--forbid to delete the author*/
-    public function authorHasBooks($id, $name, $surname): bool
+    public function authorHasBooks($id): bool
     {
         $result = TRUE;
 
-        if (!$this->isNameValid($name)) {
-            throw new Exception('Not valid author name');
+        /* Global $pdo object */
+        global $pdo;
+
+        /* Search the ID on the database */
+
+        $query = "SELECT `book_author_id` FROM `books` 
+	            INNER JOIN `authors`
+                ON `books`.`book_author_id`=`authors`.`author_id`
+                WHERE `book_author_id`=:id";
+
+        // if (!$this->isNameValid($name)) {
+        //     throw new Exception('Not valid author name');
+        // }
+
+        // if (!$this->isSurnameValid($surname)) {
+        //     throw new Exception('Not valid author surname');
+        // }
+        $values = [':id' => $id];
+
+        try {
+            $res_db = $pdo->prepare($query);
+            $res_db->execute($values);
+        } catch (PDOException $e) {
+            throw new Exception('Database query error');
         }
 
-        if (!$this->isSurnameValid($surname)) {
-            throw new Exception('Not valid author surname');
+        $result_db = $res_db->fetch(PDO::FETCH_ASSOC);
+
+        if (!is_array($result_db)) {
+            $result = FALSE;
+            /* Debug */
+            echo '<pre>';
+            print_r($result_db);
+            echo '</pre>';
         }
 
         return $result;

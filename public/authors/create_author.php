@@ -17,7 +17,7 @@ if (isset($_SESSION['libr_login'])) {
     if (isset($_POST['submit'])) {
 
         /* Set initial value */
-        $create = TRUE;
+        $success = TRUE;
 
         /* Create a new Author object */
         $author = new Author();
@@ -28,7 +28,7 @@ if (isset($_SESSION['libr_login'])) {
 
             $author->createAuthor($name, $surname);
         } catch (Exception $e) {
-            $create = FALSE;
+            $success = FALSE;
             $error = $e->getMessage();
         }
     }
@@ -38,19 +38,18 @@ if (isset($_SESSION['libr_login'])) {
 <?php require '../templates/header.php'; ?>
 
 <h2>Add a New Author</h2>
+
 <?php include '../templates/navigation.php'; ?>
 
 <form method="POST">
     <?php
     if (isset($_POST['submit'])) {
-        if ($create) {
-            /* Display success message */
+        if ($success) {
             successAuthor($author->getName(), $author->getSurname(), 'added');
 
             /* Clear form input after success message */
             $_POST = [];
         } else {
-            /* Display errors */
             showError($error);
         }
     }

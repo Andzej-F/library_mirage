@@ -239,43 +239,48 @@ class Book
        $limit defines the maximum number of allowed characters */
     public function valText($title, $limit): bool
     {
+        $result = TRUE;
+
         if (isset($title)) {
             /* Title length check */
             if ((mb_strlen($title) > $limit)) {
-                return FALSE;
+                $result = FALSE;
             }
 
-            /* Check if the title consists of alpha-numeric characters and special characters(,.'-) */
-            if (!preg_match('#^[a-zA-Z0-9" *":,.!-().?";\']+$#i', $title)) {
-                return FALSE;
+            /* Check if the title consists of alpha-numeric and special characters */
+            if (!preg_match('/^[a-zA-z0-9 ,.!().?";\'-]+$/i', $title)) {
+                $result = FALSE;
             }
         } else {
-            return FALSE;
+            $result = FALSE;
         }
-        return TRUE;
+        return $result;
     }
 
     /* Function validates integer input */
     public function valNumber($number, $limit): bool
     {
+        $result = TRUE;
+
         if (isset($number)) {
             /* Check if provided value is of integer type */
             if (filter_var($number, FILTER_VALIDATE_INT) === FALSE) {
-                return FALSE;
+                $result = FALSE;
             } else {
                 /* Check if it is positive */
                 if ($number < 0) {
-                    return FALSE;
+                    $result = FALSE;
                 }
                 /* Check if the number does not exceed the limit */
                 if (($number > $limit)) {
-                    return FALSE;
+                    $result = FALSE;
                 }
             }
         } else {
-            return FALSE;
+            $result = FALSE;
         }
-        return TRUE;
+
+        return $result;
     }
 
     /* Returns the book's id having $name as name, or NULL if it's not found */
@@ -336,14 +341,37 @@ class Book
 
         $result = $res->fetch(PDO::FETCH_ASSOC);
 
-        if (is_array($result)) {
+        return (is_array($result) ? $result :  NUll);
+    }
 
-            return $result;
-            echo '<pre>';
-            print_r($result);
-            echo '</pre>';
-        } else {
-            return NULL;
+    /* Function searches boo by book title or author name/surname */
+    public function searchBook($search): ?array
+    {
+        global $pdo;
+
+        if (!$this->valText($search, 100)) {
+            throw new Exception('Not a valid search value');
         }
+
+        $query = "SELECT `book_id`,`book_title`, `author_name`, `author_surname`
+                    FROM `books`
+                    INNER JOIN `authors` ON `books`.`book_author_id`=`authors`.`author_id`
+                    WHERE `book_title`LIKE :search
+                    OR `author_name` LIKE :search
+                    OR `author_surname` LIKE :search";
+
+        $values = [':search' => $search];
+
+        try {
+            $res = $pdo->prepare($query);
+            $res->bindValue(':search', '%' . $search . '%');
+            $res->execute();
+        } catch (PDOException $e) {
+            throw new Exception('Database query error');
+        }
+
+        $results = $res->fetchAll();
+
+        return (is_array($results) ? $results :  NUll);
     }
 }
