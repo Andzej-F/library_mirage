@@ -2,14 +2,14 @@
 
 session_start();
 
-/* Include the file with additional functions */
-require '../../../common.php';
+/* include_once the file with additional functions */
+require_once '../../../common.php';
 
-/* Include the database connection file */
-require '../../../config.php';
+/* include_once the database connection file */
+require_once '../../../config.php';
 
-/* Include the account class file */
-require '../../classes/Account.php';
+/* include_once the account class file */
+require_once '../../classes/Account.php';
 
 $account = new Account();
 
@@ -26,11 +26,11 @@ if (isset($_POST['login'])) {
 }
 ?>
 
-<?php require '../../templates/header.php'; ?>
+<?php require_once '../../templates/header.php'; ?>
 
 <h2>Librarian Login</h2>
 
-<?php include '../../templates/navigation.php'; ?>
+<?php include_once '../../templates/navigation.php'; ?>
 
 <form method="POST">
     <?php
@@ -60,4 +60,4 @@ if (isset($_POST['login'])) {
     </div>
 </form>
 
-<?php require '../../templates/footer.php';
+<?php require_once '../../templates/footer.php';

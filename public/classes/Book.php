@@ -96,14 +96,15 @@ class Book
     }
 
     /* Display library books */
+    //TODO update fucntion to show pagination
     public function readBook(): array
     {
         global $pdo;
 
-        $query = "SELECT `book_id`, `book_title`, `author_name`, `author_surname` 
-                FROM `books` 
+        $query = "SELECT * FROM `books` 
 	            INNER JOIN `authors`
-                ON `books`.`book_author_id`=`authors`.`author_id`";
+                ON `books`.`book_author_id`=`authors`.`author_id`
+                ORDER BY `book_title`";
 
         try {
             $res = $pdo->prepare($query);

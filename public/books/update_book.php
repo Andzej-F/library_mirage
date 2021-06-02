@@ -5,17 +5,17 @@ session_start();
 /* Check if the librarian has logged in */
 if (isset($_SESSION['libr_login'])) {
 
-    /* Include the file with additional functions */
-    require '../../common.php';
+    /* include_once the file with additional functions */
+    require_once '../../common.php';
 
-    /* Include the database connection file */
-    require '../../config.php';
+    /* include_once the database connection file */
+    require_once '../../config.php';
 
-    /* Include the Book class file */
-    require '../classes/Book.php';
+    /* include_once the Book class file */
+    require_once '../classes/Book.php';
 
-    /* Include the Author class file */
-    require '../classes/Author.php';
+    /* include_once the Author class file */
+    require_once '../classes/Author.php';
 
     /* Create a new Book object */
     $book = new Book();
@@ -50,11 +50,11 @@ $authors = $author->readAuthor();
 $book_db = $book->getBookById($_GET['book_id']);
 ?>
 
-<?php require '../templates/header.php'; ?>
+<?php require_once '../templates/header.php'; ?>
 
 <h2>Update the Book</h2>
 
-<?php include '../templates/navigation.php'; ?>
+<?php include_once '../templates/navigation.php'; ?>
 
 <form method="POST">
     <?php
@@ -110,4 +110,4 @@ $book_db = $book->getBookById($_GET['book_id']);
         </div>
     </form>
 
-    <?php include '../templates/footer.php';
+    <?php include_once '../templates/footer.php';

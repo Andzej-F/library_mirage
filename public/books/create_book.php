@@ -2,8 +2,8 @@
 
 session_start();
 
-/* Include the file with additional functions */
-require '../../common.php';
+/* include_once the file with additional functions */
+require_once '../../common.php';
 
 /* Initial value for error string  */
 $error = '';
@@ -11,14 +11,14 @@ $error = '';
 /* Check if the librarian has logged in */
 if (isset($_SESSION['libr_login'])) {
 
-    /* Include the database connection file */
-    require '../../config.php';
+    /* include_once the database connection file */
+    require_once '../../config.php';
 
-    /* Include the Author class file */
-    require '../classes/Author.php';
+    /* include_once the Author class file */
+    require_once '../classes/Author.php';
 
-    /* Include the Book class file */
-    require '../classes/Book.php';
+    /* include_once the Book class file */
+    require_once '../classes/Book.php';
     if (isset($_POST['submit'])) {
 
         /* Create a new Book object */
@@ -44,10 +44,10 @@ if (isset($_SESSION['libr_login'])) {
 }
 ?>
 
-<?php require '../templates/header.php'; ?>
+<?php require_once '../templates/header.php'; ?>
 
 <h2>Add a New Book</h2>
-<?php include '../templates/navigation.php'; ?>
+<?php include_once '../templates/navigation.php'; ?>
 
 <form method="POST">
     <?php
@@ -94,8 +94,8 @@ if (isset($_SESSION['libr_login'])) {
             <?php
             if (is_array($authors)) {
                 foreach ($authors as $author) { ?>
-                    <option value="<?php echo escape($author['author_id']); ?>">
-                        <?php echo escape($author['author_name']) . ' ' . escape($author['author_surname']); ?></option>
+                    <option value="<?= escape($author['author_id']); ?>">
+                        <?= escape($author['author_name']) . ' ' . escape($author['author_surname']); ?></option>
             <?php }
             } ?>
         </select>
@@ -105,4 +105,4 @@ if (isset($_SESSION['libr_login'])) {
     </div>
 </form>
 
-<?php include '../templates/footer.php'; ?>
+<?php include_once '../templates/footer.php'; ?>

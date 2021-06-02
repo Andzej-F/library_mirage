@@ -2,8 +2,8 @@
 
 session_start();
 
-include './templates/header.php';
-include '../common.php';
+include_once './templates/header.php';
+include_once '../common.php';
 ?>
 
 
@@ -11,12 +11,12 @@ include '../common.php';
     <h1 class="header">Library "Mirage"</h1>
     <div class="box">
 
-        <?php include './templates/navigation.php'; ?>
+        <?php include_once './templates/navigation.php'; ?>
 
         <div class="row">
             <?php
             if (isset($_SESSION['libr_login']) || isset($_SESSION['reader_login'])) {
-                include './search/search_field.php';
+                include_once './search/search_field.php';
             } ?>
         </div>
 
@@ -29,4 +29,4 @@ include '../common.php';
             </div>
         </div>
 
-        <?php require './templates/footer.php'; ?>
+        <?php require_once './templates/footer.php'; ?>

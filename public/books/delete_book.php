@@ -5,14 +5,14 @@ session_start();
 /* Check if the librarian has logged in */
 if (isset($_SESSION['libr_login'])) {
 
-    /* Include the file with additional functions */
-    require '../../common.php';
+    /* include_once the file with additional functions */
+    require_once '../../common.php';
 
-    /* Include the database connection file */
-    require '../../config.php';
+    /* include_once the database connection file */
+    require_once '../../config.php';
 
-    /* Include the Book class file */
-    require '../classes/Book.php';
+    /* include_once the Book class file */
+    require_once '../classes/Book.php';
 
     /* Create a new Book object */
     $book = new Book();
@@ -42,9 +42,9 @@ if (isset($_SESSION['libr_login'])) {
         $error = $e->getMessage();
     }
 
-    include '../templates/header.php';
+    include_once '../templates/header.php';
 
-    include '../templates/books_table.php';
+    include_once '../templates/books_table.php';
 }
 ?>
-<?php include '../templates/footer.php'; ?>
+<?php include_once '../templates/footer.php'; ?>

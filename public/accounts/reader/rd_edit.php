@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-/* Include a file with common functions */
-require '../../../common.php';
+/* include_once a file with common functions */
+require_once '../../../common.php';
 
-/* Include the Account class file */
-require '../../classes/Account.php';
+/* include_once the Account class file */
+require_once '../../classes/Account.php';
 
-/* Include the database connection file */
-require '../../../config.php';
+/* include_once the database connection file */
+require_once '../../../config.php';
 
 /* Create a new Account object */
 $account = new Account();
@@ -29,11 +29,11 @@ if (isset($_POST['edit'])) {
     }
 }
 
-include '../../templates/header.php'; ?>
+include_once '../../templates/header.php'; ?>
 
 <h2>Edit Account</h2>
 
-<?php include '../../templates/navigation.php'; ?>
+<?php include_once '../../templates/navigation.php'; ?>
 
 <form method="post">
     <?php
@@ -58,4 +58,4 @@ include '../../templates/header.php'; ?>
     </div>
 </form>
 
-<?php include '../../templates/footer.php';
+<?php include_once '../../templates/footer.php';

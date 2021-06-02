@@ -2,17 +2,17 @@
 
 session_start();
 
-/* Include the file with additional functions */
-require '../../common.php';
+/* include_once the file with additional functions */
+require_once '../../common.php';
 
-/* Include the database connection file */
-require '../../config.php';
+/* include_once the database connection file */
+require_once '../../config.php';
 
-/* Include the Author class file */
-require '../classes/Author.php';
+/* include_once the Author class file */
+require_once '../classes/Author.php';
 
-/* Include the Book class file */
-require '../classes/Book.php';
+/* include_once the Book class file */
+require_once '../classes/Book.php';
 
 /* Check if the librarian has logged in */
 if ($librLogged || $readerLogged) {
@@ -37,11 +37,11 @@ if ($librLogged || $readerLogged) {
     }
 }
 
-require '../templates/header.php'; ?>
+require_once '../templates/header.php'; ?>
 
 <h2>Books</h2>
 
-<?php include '../templates/navigation.php'; ?>
+<?php include_once '../templates/navigation.php'; ?>
 
 <?php
 if (isset($_GET['search_btn'])) {
@@ -85,4 +85,4 @@ if (isset($_GET['search_btn'])) {
     }
 }
 ?>
-<?php include '../templates/footer.php'; ?>
+<?php include_once '../templates/footer.php'; ?>

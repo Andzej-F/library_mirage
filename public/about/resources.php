@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-require '../templates/header.php';
+require_once '../templates/header.php';
 ?>
 
 <h2>Resources</h2>
-<?php require '../templates/navigation.php'; ?>
+<?php require_once '../templates/navigation.php'; ?>
 
 <h2 class="about">Blogs/Tutorials/Websites</h2>
 <ul class="about">
@@ -25,4 +25,4 @@ require '../templates/header.php';
     <li><a href="https://images-na.ssl-images-amazon.com/images/I/514s3VoIs-L._SX312_BO1,204,203,200_.jpg">"Treasure Island" book cover</a></li>
     <li><a href="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1328864746l/1086164.jpg">"Journey To The Center Of The Earth" book cover</a></li>
 </ul>
-<?php require '../templates/footer.php'; ?>
+<?php require_once '../templates/footer.php'; ?>

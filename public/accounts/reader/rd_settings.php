@@ -1,20 +1,20 @@
 <?php
 session_start();
 
-/* Include common functions file */
-require '../../../common.php';
+/* include_once common functions file */
+require_once '../../../common.php';
 
-// /* Include the Account class file */
-require '../../classes/Account.php';
+// /* include_once the Account class file */
+require_once '../../classes/Account.php';
 
-/* Include the database connection file */
-require '../../../config.php';
+/* include_once the database connection file */
+require_once '../../../config.php';
 
-include '../../templates/header.php'; ?>
+include_once '../../templates/header.php'; ?>
 
 <h2>Account Settings</h2>
 
-<?php include '../../templates/navigation.php'; ?>
+<?php include_once '../../templates/navigation.php'; ?>
 <ul>
     <li>
         <h3><a href="<?= $address; ?>/accounts/reader/rd_edit.php">Edit Account</a></h3>
@@ -23,4 +23,4 @@ include '../../templates/header.php'; ?>
         <h3><a href="<?= $address; ?>/accounts/reader/rd_delete.php">Delete Account</a></h3>
     </li>
 </ul>
-<?php include '../../templates/footer.php';
+<?php include_once '../../templates/footer.php';

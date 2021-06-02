@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-/* Include the file with additional functions */
-require '../../common.php';
+/* include_once the file with additional functions */
+require_once '../../common.php';
 
-/* Include the database connection file */
-require '../../config.php';
+/* include_once the database connection file */
+require_once '../../config.php';
 
-/* Include the Author class file */
-require '../classes/Book.php';
+/* include_once the Author class file */
+require_once '../classes/Book.php';
 
 /* Create a new Book object */
 $book = new Book();
@@ -20,8 +20,8 @@ try {
     $error = $e->getMessage();
 }
 
-include '../templates/header.php';
+include_once '../templates/header.php';
 
-include '../templates/books_table.php';
+include_once '../templates/books_table.php';
 
-include '../templates/footer.php';
+include_once '../templates/footer.php';

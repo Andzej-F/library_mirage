@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-/* Include the file with additional functions */
-require '../../../common.php';
+/* include_once the file with additional functions */
+require_once '../../../common.php';
 
-/* Include the Account class file */
-require '../../classes/Account.php';
+/* include_once the Account class file */
+require_once '../../classes/Account.php';
 
-/* Include the database connection file */
-require '../../../config.php';
+/* include_once the database connection file */
+require_once '../../../config.php';
 
 $account = new Account();
 
@@ -27,11 +27,11 @@ if (isset($_POST['register'])) {
         $error = $e->getMessage();
     }
 }
-include '../../templates/header.php'; ?>
+include_once '../../templates/header.php'; ?>
 
 <h2>Reader Registration</h2>
 
-<?php include '../../templates/navigation.php'; ?>
+<?php include_once '../../templates/navigation.php'; ?>
 
 <form method="POST">
     <?php
@@ -57,4 +57,4 @@ include '../../templates/header.php'; ?>
     </div>
 </form>
 
-<?php include '../../templates/footer.php'; ?>
+<?php include_once '../../templates/footer.php'; ?>

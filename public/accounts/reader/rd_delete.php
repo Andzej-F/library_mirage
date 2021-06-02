@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-/* Include common functions file */
-require '../../../common.php';
+/* include_once common functions file */
+require_once '../../../common.php';
 
-/* Include the Account class file */
-require '../../classes/Account.php';
+/* include_once the Account class file */
+require_once '../../classes/Account.php';
 
-/* Include the database connection file */
-require '../../../config.php';
+/* include_once the database connection file */
+require_once '../../../config.php';
 
 $account = new Account();
 
@@ -22,14 +22,14 @@ try {
     $success = FALSE;
 }
 
-/* Include header file */
-include '../../templates/header.php'; ?>
+/* include_once header file */
+include_once '../../templates/header.php'; ?>
 
 <h2>Account Settings</h2>
 
 <?php
-/* Include navigation bar file */
-include '../../templates/navigation.php';
+/* include_once navigation bar file */
+include_once '../../templates/navigation.php';
 
 if ($success) {
     /* Display success message */
@@ -45,4 +45,4 @@ if ($success) {
     showError($error);
 }
 
-include '../../templates/footer.php';
+include_once '../../templates/footer.php';

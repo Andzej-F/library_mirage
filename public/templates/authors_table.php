@@ -4,7 +4,7 @@
 
     if (is_array($result)) { ?>
         <h2>Authors</h2>
-        <?php include '../templates/navigation.php'; ?>
+        <?php include_once '../templates/navigation.php'; ?>
         <table>
             <thead>
                 <tr>

@@ -2,14 +2,14 @@
 
 session_start();
 
-/* Include the file with additional functions */
-require '../../../common.php';
+/* include_once the file with additional functions */
+require_once '../../../common.php';
 
-/* Include the database connection file */
-require '../../../config.php';
+/* include_once the database connection file */
+require_once '../../../config.php';
 
-/* Include the account class file */
-require '../../classes/Account.php';
+/* include_once the account class file */
+require_once '../../classes/Account.php';
 
 /* Create a new account object */
 $account = new Account();

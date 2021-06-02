@@ -2,14 +2,14 @@
 
 session_start();
 
-/* Include the file with additional functions */
-require '../../common.php';
+/* include_once the file with additional functions */
+require_once '../../common.php';
 
-/* Include the database connection file */
-require '../../config.php';
+/* include_once the database connection file */
+require_once '../../config.php';
 
-/* Include the Author class file */
-require '../classes/Author.php';
+/* include_once the Author class file */
+require_once '../classes/Author.php';
 
 /* Check if the librarian has logged in */
 if (isset($_SESSION['libr_login'])) {
@@ -36,10 +36,10 @@ if (isset($_SESSION['libr_login'])) {
 $author_db = $author->getAuthorById($_GET['author_id']);
 ?>
 
-<?php require '../templates/header.php'; ?>
+<?php require_once '../templates/header.php'; ?>
 
 <h2>Update the Author</h2>
-<?php include '../templates/navigation.php'; ?>
+<?php include_once '../templates/navigation.php'; ?>
 <form method="POST">
     <?php
     if (isset($_POST['submit'])) {
@@ -72,4 +72,4 @@ $author_db = $author->getAuthorById($_GET['author_id']);
     </div>
 </form>
 
-<?php require '../templates/footer.php'; ?>
+<?php require_once '../templates/footer.php'; ?>

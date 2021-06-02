@@ -2,14 +2,14 @@
 
 session_start();
 
-/* Include the file with additional functions */
-require '../../common.php';
+/* include_once the file with additional functions */
+require_once '../../common.php';
 
-/* Include the database connection file */
-require '../../config.php';
+/* include_once the database connection file */
+require_once '../../config.php';
 
-/* Include the Author class file */
-require '../classes/Author.php';
+/* include_once the Author class file */
+require_once '../classes/Author.php';
 
 /* Check if the librarian has logged in */
 if (isset($_SESSION['libr_login'])) {
@@ -44,8 +44,8 @@ if (isset($_SESSION['libr_login'])) {
         }
     }
 }
-include '../templates/header.php';
+include_once '../templates/header.php';
 
-include '../templates/authors_table.php';
+include_once '../templates/authors_table.php';
 
-include '../templates/footer.php';
+include_once '../templates/footer.php';

@@ -4,7 +4,7 @@
  * Configuration for database connection 
  */
 
-require 'credentials.php';
+require_once 'credentials.php';
 
 $pdo = NULL;
 $dsn = 'mysql:host=' . $host . ';dbname=' . $schema;

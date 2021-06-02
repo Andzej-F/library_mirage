@@ -78,7 +78,8 @@ class Author
         global $pdo;
 
         /* Select query template */
-        $query = 'SELECT * FROM `authors` WHERE 1';
+        $query = 'SELECT * FROM `authors` WHERE 1
+                  ORDER BY `author_surname`';
 
         /* Execute the query */
         try {
@@ -272,8 +273,7 @@ class Author
         }
     }
 
-    /*TODO create a function that will chaeck if author has books
-     if yes--forbid to delete the author*/
+    /*Function checks if the author has books, to avoid deletion from system*/
     public function authorHasBooks($id): bool
     {
         $result = TRUE;
@@ -288,13 +288,6 @@ class Author
                 ON `books`.`book_author_id`=`authors`.`author_id`
                 WHERE `book_author_id`=:id";
 
-        // if (!$this->isNameValid($name)) {
-        //     throw new Exception('Not valid author name');
-        // }
-
-        // if (!$this->isSurnameValid($surname)) {
-        //     throw new Exception('Not valid author surname');
-        // }
         $values = [':id' => $id];
 
         try {
@@ -308,10 +301,6 @@ class Author
 
         if (!is_array($result_db)) {
             $result = FALSE;
-            /* Debug */
-            echo '<pre>';
-            print_r($result_db);
-            echo '</pre>';
         }
 
         return $result;

@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-require '../templates/header.php'; ?>
+require_once '../templates/header.php'; ?>
 
 <h2>About the Project</h2>
-<?php include '../templates/navigation.php'; ?>
+<?php include_once '../templates/navigation.php'; ?>
 
 <p class="about"><b>"Library Mirage"</b> is an ongoing portfolio web application project.
     It is being updated on a regular basis.</p>
@@ -34,4 +34,4 @@ require '../templates/header.php'; ?>
             <li>if I will come up with anything else, I will add it &#128521</li>
         </ul>
 
-        <?php require '../templates/footer.php'; ?>
+        <?php require_once '../templates/footer.php'; ?>
