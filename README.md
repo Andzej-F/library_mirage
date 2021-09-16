@@ -1,6 +1,6 @@
 # library_mirage
 
-"Library Mirage" is an ongoing portfolio web application project.
+"Library Mirage" is a portfolio web application project.
  
 <b>Current project features:</b>
     <ul>
@@ -17,11 +17,3 @@
                 <li><b>manage</b> their accounts(CRUD operations)</li>
                 <li>see the <b>search field</b> on the main page</li>
             </ul>    
-    
-<b>Upcoming updates:</b>
-        <ul>
-            <li>front page <b>automatic update</b> - 3 recent books added by "librarian" will automatically
-                appear on the front page (now it's just a static content used to fill the space)</li>
-            <li><b>"book cart"</b> option for the "books" taken by "readers"</li>
-            <li>if I will come up with anything else, I will add it :wink:</li>
-        </ul>
