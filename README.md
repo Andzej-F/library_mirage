@@ -7,7 +7,6 @@
     <ul>
         <li><b>CRUD (create, read, update, delete)</b> model for managing "author", "book" and "reader account" data</li>
         <li><b>search</b> "book" option (available after login or registration)</li>
-        <li><b>plain</b> PHP (no frameworks or libraries)</li>
         <li>main focus on the application's <b>back-end</b></li>
         <li><b>OOP</b> code style</li>
         <li>use <b>PDO</b> for database connection</li>
