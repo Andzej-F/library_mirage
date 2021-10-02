@@ -1,1 +1,1 @@
-{"version":1,"defects":{"CreateAuthorTest::testIfObjectIsAnInstanceOfAuthorClass":4},"times":{"CreateAuthorTest::testIfObjectIsAnInstanceOfAuthorClass":0.004}}
+{"version":1,"defects":{"CreateAuthorTest::testIfObjectIsAnInstanceOfAuthorClass":4,"AuthorClassTest::testCreateAuthorMethod":4,"AuthorClassTest::testMockOfTheAuthorClass":4},"times":{"CreateAuthorTest::testIfObjectIsAnInstanceOfAuthorClass":0.004,"AuthorClassTest::testIfObjectIsAnInstanceOfAuthorClass":0.004,"AuthorClassTest::testCreateAuthorMethod":0.001,"AuthorClassTest::testMockOfTheAuthorClass":0.013}}
